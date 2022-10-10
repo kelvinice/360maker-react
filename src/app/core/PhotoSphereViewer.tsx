@@ -38,10 +38,11 @@ const PhotoSphereViewer = () => {
         // @ts-ignore
         markersPlugin.on('select-marker', (e, marker) => {
             // @ts-ignore
-            markersPlugin.updateMarker({
-                id: marker.id,
-                image: 'asset/pin-blue.png'
-            });
+            // markersPlugin.updateMarker({
+            //     id: marker.id,
+            //     image: 'asset/pin-blue.png'
+            // });
+            viewer.setPanorama("asset/field.jpg");
         });
 
         viewer.on('click', (e, data) => {
@@ -61,9 +62,6 @@ const PhotoSphereViewer = () => {
                     }
                 });
             }
-        });
-        viewer.on('click', (e, data) => {
-            viewer.setPanorama("asset/field.jpg");
         });
 
 
