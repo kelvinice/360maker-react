@@ -1,14 +1,15 @@
 import './styles/App.css';
 import './styles/photo-sphere-viewer.min.css';
+import './styles/markers.min.css';
 
 import React from 'react';
-import Main from "./core/Main";
+import PhotoSphereViewer from "./core/PhotoSphereViewer";
 
 function App() {
 
   return (
       <div className="App">
-        <Main />
+        <PhotoSphereViewer />
       </div>
   );
   
