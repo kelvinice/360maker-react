@@ -9,3 +9,14 @@ html, body{
   width: 100vw;
   height: 100vh;
 }
+
+.ui-menu{
+    z-index: 1000;
+    position: absolute;
+    /*top: 0;*/
+}
+
+.top-right{
+    top: 0;
+    right: 0;
+}

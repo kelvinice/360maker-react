@@ -4,15 +4,40 @@ import './styles/markers.min.css';
 
 import React from 'react';
 import PhotoSphereViewer from "./core/PhotoSphereViewer";
+import {FloatingButton} from "./side-menu/floating-button/FloatingButton";
+import {MenuProvider} from "./providers/MenuProvider";
+import AddSceneModal from "./scenes/add/AddSceneModal";
+import ViewSceneModal from "./scenes/view/ViewSceneModal";
 
-function App() {
+const ModalWrapper = () => {
+    return (
+        <>
+            <ViewSceneModal />
+            <AddSceneModal />
+        </>
+    )
+}
+
+const App = () => {
+
 
   return (
       <div className="App">
-        <PhotoSphereViewer />
+          <PhotoSphereViewer />
+          <div className="ui-menu top-0 end-0 m-2">
+              <FloatingButton />
+          </div>
+          <ModalWrapper />
       </div>
   );
-  
 }
 
-export default App;
+const AppWrapper = () => {
+    return (
+        <MenuProvider>
+            <App />
+        </MenuProvider>
+    );
+}
+
+export default AppWrapper;

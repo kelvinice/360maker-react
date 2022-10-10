@@ -6,11 +6,9 @@ import {MarkersPlugin} from "photo-sphere-viewer/dist/plugins/markers";
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
 
-
     useEffect(()=>{
         if(!ref || !ref.current)
             return;
-
 
         const viewer = new Viewer({
             panorama: "https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/tunnel.jpg",
