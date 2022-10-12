@@ -30,12 +30,10 @@ const ViewSceneModal = () => {
                         <MDBModalBody>
                             <ViewSceneTable />
                         </MDBModalBody>
-
                         <MDBModalFooter>
                             <MDBBtn color='secondary' onClick={()=>setModalAddScene(true)}>Add Scene</MDBBtn>
                         </MDBModalFooter>
                     </MDBModalContent>
-
                 </MDBModalDialog>
             </MDBModal>
 

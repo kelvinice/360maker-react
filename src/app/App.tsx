@@ -8,6 +8,7 @@ import {FloatingButton} from "./side-menu/floating-button/FloatingButton";
 import {MenuProvider} from "./providers/MenuProvider";
 import AddSceneModal from "./scenes/add/AddSceneModal";
 import ViewSceneModal from "./scenes/view/ViewSceneModal";
+import {Toaster} from "react-hot-toast";
 
 const ModalWrapper = () => {
     return (
@@ -19,8 +20,6 @@ const ModalWrapper = () => {
 }
 
 const App = () => {
-
-
   return (
       <div className="App">
           <PhotoSphereViewer />
@@ -33,9 +32,11 @@ const App = () => {
 }
 
 const AppWrapper = () => {
+    
     return (
         <MenuProvider>
             <App />
+            <Toaster />
         </MenuProvider>
     );
 }
