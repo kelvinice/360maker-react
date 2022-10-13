@@ -3,12 +3,11 @@ import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../atoms/DataAtom";
 import {SweetAlert} from "../../../constants/SweetAlert";
 import toast from "react-hot-toast";
-import {useMenu} from "../../../providers/MenuProvider";
-import {Global} from "../../../data/Global";
+import {Scene} from "../../../models/DataModel";
+import {changeScene} from "../../../core/PhotoSphereViewer";
 
 const ViewSceneTable = () => {
     const [scene, setScene] = useAtom(dataScenesAtom);
-    const {viewer} = useMenu();
 
     const deleteScene = (id: string) => {
         SweetAlert.fire({
@@ -27,12 +26,8 @@ const ViewSceneTable = () => {
         })
     }
 
-    const handleView = (path: string) => {
-
-        console.log(Global.viewer);
-        console.log(path);
-        // @ts-ignore
-        Global.viewer.setPanorama(path);
+    const handleView = (scene: Scene) => {
+        changeScene(scene);
     }
 
     return (
@@ -63,7 +58,7 @@ const ViewSceneTable = () => {
                                         <i className="fa fa-edit"/>
                                     </button>
                                     <button className="btn btn-success ms-2"
-                                        onClick={() => handleView(scene.path)}>
+                                        onClick={() => handleView(scene)}>
                                         <i className="fa fa-eye"/>
                                     </button>
                                 </div>

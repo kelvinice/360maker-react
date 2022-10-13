@@ -10,15 +10,17 @@ import {useMenu} from "../../../providers/MenuProvider";
 
 
 const AddSceneModalForm = () => {
-    const {register, handleSubmit, formState: {errors}} = useForm<Scene>();
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<Scene>();
     const {setModalAddScene} = useMenu();
     const [scenes, setScenes] = useAtom(dataScenesAtom);
 
     const submit = (data: Scene) => {
         data.id = uuidv4();
+        data.markers = [];
         setScenes([...scenes, data]);
         toast.success("Scene added");
         setModalAddScene(false);
+        reset();
     }
 
     return (

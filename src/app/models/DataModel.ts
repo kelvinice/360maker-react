@@ -8,7 +8,7 @@ export interface Scene{
     name: string
     path: string
     description?: string
-    markers?: Marker[]
+    markers: Marker[]
 }
 
 export interface Marker {
@@ -16,9 +16,10 @@ export interface Marker {
     type: string
     name: string
     location: {
-        lat: number
-        lng: number
+        latitude: number
+        longitude: number
     }
+    targetSceneId?: string
 }
 
 export interface SettingModel {
