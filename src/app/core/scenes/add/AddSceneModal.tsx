@@ -7,7 +7,7 @@ import {
     MDBModalHeader,
     MDBModalTitle
 } from "mdb-react-ui-kit";
-import {useMenu} from "../../providers/MenuProvider";
+import {useMenu} from "../../../providers/MenuProvider";
 import AddSceneModalForm from "./form/AddSceneModalForm";
 
 const AddSceneModal = () => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import {useAtom} from "jotai";
-import {dataScenesAtom} from "../../../atoms/DataAtom";
-import {SweetAlert} from "../../../constants/SweetAlert";
+import {dataScenesAtom} from "../../../../atoms/DataAtom";
+import {SweetAlert} from "../../../../constants/SweetAlert";
 import toast from "react-hot-toast";
-import {Scene} from "../../../models/DataModel";
-import {changeScene} from "../../../core/PhotoSphereViewer";
+import {Scene} from "../../../../models/DataModel";
+import {changeScene} from "../../../PhotoSphereViewer";
 
 const ViewSceneTable = () => {
     const [scene, setScene] = useAtom(dataScenesAtom);

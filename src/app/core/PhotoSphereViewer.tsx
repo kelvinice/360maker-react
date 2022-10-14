@@ -5,19 +5,22 @@ import {Global} from "../data/Global";
 import {Marker, Scene} from "../models/DataModel";
 import {v4 as uuidv4} from "uuid";
 import {useAtom} from "jotai";
-import {dataScenesAtom} from "../atoms/DataAtom";
+import {dataScenesAtom, settingsAtom} from "../atoms/DataAtom";
 import {useAtomCallback} from "jotai/utils";
+import {useMenu} from "../providers/MenuProvider";
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
     const [scenes, setScenes] = useAtom(dataScenesAtom);
+    const [setting] = useAtom(settingsAtom);
+    const {setMarkerToConfig} = useMenu();
 
     useEffect(()=>{
         if(!ref || !ref.current || Global.viewer)
             return;
 
         Global.viewer = new Viewer({
-            panorama: "https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/tunnel.jpg",
+            // panorama: "https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/tunnel.jpg",
             container: ref.current,
             plugins: [
                 [MarkersPlugin, {
@@ -33,10 +36,7 @@ const PhotoSphereViewer = () => {
             //     id: marker.id,
             //     image: 'asset/pin-blue.png'
             // });
-            console.log(e);
-            console.log(marker.data);
-
-
+            setMarkerToConfig(marker.data.marker);
             // Global.viewer.setPanorama("asset/field.jpg");
         });
 
@@ -76,12 +76,23 @@ const PhotoSphereViewer = () => {
 
     }, [ref]);
 
+    useEffect(() => {
+        if(!Global.firstLoad)
+            return;
+        if(!setting)
+            return;
+        const currentScene = scenes.find(scene => scene.id === setting.initialScene);
+        if(currentScene){
+            changeScene(currentScene);
+        }
+        Global.firstLoad = false;
+    }, [setting])
+
+
     const saveScene = useAtomCallback(useCallback((get) => {
         const scenes = get(dataScenesAtom);
         setScenes([...scenes]);
     }, []))
-
-
 
 
     return (
@@ -101,23 +112,25 @@ export const changeScene = (scene: Scene) => {
         markersPlugin.removeMarkers(markerIds);
     }
     Global.currentScene = scene;
-    scene.markers.forEach(m => {
-        markersPlugin.addMarker({
-            id: m.id as string,
-            longitude: m.location.longitude,
-            latitude: m.location.latitude,
-            image: 'asset/pin-blue.png',
-            width: 32,
-            height: 32,
-            anchor: 'bottom center',
-            tooltip: m.name,
-            data: {
-                generated: false,
-                scene: scene,
-                marker: m
-            }
+    setTimeout(() => {
+        scene.markers.forEach(m => {
+            markersPlugin.addMarker({
+                id: m.id as string,
+                longitude: m.location.longitude,
+                latitude: m.location.latitude,
+                image: 'asset/pin-blue.png',
+                width: 32,
+                height: 32,
+                anchor: 'bottom center',
+                tooltip: m.name,
+                data: {
+                    generated: false,
+                    scene: scene,
+                    marker: m
+                }
+            });
         });
-    });
+    }, 1000);
 
 }
 

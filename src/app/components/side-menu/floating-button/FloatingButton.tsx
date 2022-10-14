@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import {ChildButton, FloatingMenu, MainButton} from "react-floating-button-menu";
 import {Close, Add, Save, CloudUpload, AddAPhoto, PinDrop, Settings} from "@material-ui/icons";
-import {useMenu} from "../../providers/MenuProvider";
+import {useMenu} from "../../../providers/MenuProvider";
 
 export const FloatingButton = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const {setModalViewScene} = useMenu();
+    const {setModalViewScene, setModalSetting} = useMenu();
 
     const mainSize = 56;
     const childSize = 40;
@@ -33,7 +33,6 @@ export const FloatingButton = () => {
             size={childSize}
             onClick={() => setModalViewScene(true)}
             background={buttonBackgroundColor}
-
         />
         <ChildButton
             icon={<PinDrop />}
@@ -44,7 +43,7 @@ export const FloatingButton = () => {
         <ChildButton
             icon={<Settings />}
             size={childSize}
-            onClick={() => console.log('clicked')}
+            onClick={() => setModalSetting(true)}
             background={buttonBackgroundColor}
         />
         <ChildButton

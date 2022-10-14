@@ -4,20 +4,10 @@ import './styles/markers.min.css';
 
 import React from 'react';
 import PhotoSphereViewer from "./core/PhotoSphereViewer";
-import {FloatingButton} from "./side-menu/floating-button/FloatingButton";
+import {FloatingButton} from "./components/side-menu/floating-button/FloatingButton";
 import {MenuProvider} from "./providers/MenuProvider";
-import AddSceneModal from "./scenes/add/AddSceneModal";
-import ViewSceneModal from "./scenes/view/ViewSceneModal";
 import {Toaster} from "react-hot-toast";
-
-const ModalWrapper = () => {
-    return (
-        <>
-            <ViewSceneModal />
-            <AddSceneModal />
-        </>
-    )
-}
+import ModalWrapper from "./components/ModalWrapper";
 
 const App = () => {
   return (

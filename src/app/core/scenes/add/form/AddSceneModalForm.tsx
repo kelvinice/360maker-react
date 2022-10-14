@@ -1,12 +1,12 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
 import {MDBBtn, MDBModalBody, MDBModalFooter} from "mdb-react-ui-kit";
-import {Scene} from "../../../models/DataModel";
+import {Scene} from "../../../../models/DataModel";
 import {useAtom} from "jotai";
-import {dataScenesAtom} from "../../../atoms/DataAtom";
+import {dataScenesAtom} from "../../../../atoms/DataAtom";
 import {v4 as uuidv4} from 'uuid';
 import toast from "react-hot-toast";
-import {useMenu} from "../../../providers/MenuProvider";
+import {useMenu} from "../../../../providers/MenuProvider";
 
 
 const AddSceneModalForm = () => {
