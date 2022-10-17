@@ -13,7 +13,6 @@ import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../atoms/DataAtom";
 import {useForm} from "react-hook-form";
 import ConfigMarkerForm from "../form/ConfigMarkerForm";
-import {Marker} from "../../../models/DataModel";
 import {Global} from "../../../data/Global";
 import toast from "react-hot-toast";
 
@@ -23,20 +22,21 @@ export type ConfigMarkerProps = {
 
 const ConfigMarkerModal = () => {
     const [scenes, setScene] = useAtom(dataScenesAtom);
-    // const {setModalConfigMarker, modalConfigMarker} = useMenu();
-    const {register, handleSubmit, setValue}= useForm<ConfigMarkerProps>();
+    const {register, handleSubmit, setValue, watch}= useForm<ConfigMarkerProps>();
     const {markerToConfig, setMarkerToConfig} = useMenu();
 
     const submit = (data: ConfigMarkerProps) => {
-        const temp = [...scenes];
-        const marker = Global.currentScene.markers.find((marker) => marker.id === markerToConfig?.id);
-        console.log(Global.currentScene);
-        console.log(markerToConfig);
+        const scene = scenes?.find((scene) => scene.id === Global.currentScene.id);
+        const marker = scene?.markers.find((marker) => marker.id === markerToConfig?.id);
 
+        console.log(data.targetSceneId);
         if (marker) {
             marker.targetSceneId = data.targetSceneId;
-            setScene(temp);
+            const newSceneObject = [...scenes];
+            setScene(newSceneObject);
+            Global.currentScene = newSceneObject.find((scene) => scene.id === Global.currentScene.id) ?? Global.currentScene;
             toast.success("Marker Config saved");
+            setMarkerToConfig(null);
         }else{
             toast.error("Marker Config failed");
         }
@@ -44,7 +44,7 @@ const ConfigMarkerModal = () => {
 
     useEffect(() => {
         if (markerToConfig) {
-            console.log(markerToConfig);
+            console.log(markerToConfig.targetSceneId);
             setValue("targetSceneId", markerToConfig.targetSceneId as string);
         }
     }, [markerToConfig]);
@@ -59,7 +59,7 @@ const ConfigMarkerModal = () => {
                             <MDBBtn className='btn-close' color='none' onClick={()=>setMarkerToConfig(null)}></MDBBtn>
                         </MDBModalHeader>
                         <MDBModalBody>
-                            <ConfigMarkerForm register={register} />
+                            <ConfigMarkerForm register={register} setValue={setValue} />
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn color='primary' onClick={handleSubmit(submit)}>Save Config</MDBBtn>

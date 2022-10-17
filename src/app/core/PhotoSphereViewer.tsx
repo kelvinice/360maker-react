@@ -8,6 +8,7 @@ import {useAtom} from "jotai";
 import {dataScenesAtom, settingsAtom} from "../atoms/DataAtom";
 import {useAtomCallback} from "jotai/utils";
 import {useMenu} from "../providers/MenuProvider";
+import toast from 'react-hot-toast';
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
@@ -36,7 +37,12 @@ const PhotoSphereViewer = () => {
             //     id: marker.id,
             //     image: 'asset/pin-blue.png'
             // });
-            setMarkerToConfig(marker.data.marker);
+            const targetMarker = Global.currentScene.markers.find((m) => m.id === marker.data.marker.id);
+            if(!targetMarker){
+                toast.error("Marker not found");
+                return;
+            }
+            setMarkerToConfig(targetMarker);
             // Global.viewer.setPanorama("asset/field.jpg");
         });
 
@@ -112,6 +118,7 @@ export const changeScene = (scene: Scene) => {
         markersPlugin.removeMarkers(markerIds);
     }
     Global.currentScene = scene;
+
     setTimeout(() => {
         scene.markers.forEach(m => {
             markersPlugin.addMarker({
