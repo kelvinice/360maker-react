@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import {ChildButton, FloatingMenu, MainButton} from "react-floating-button-menu";
-import {Close, Add, Save, CloudUpload, AddAPhoto, PinDrop, Settings} from "@material-ui/icons";
+import {Close, Add, Save, CloudUpload, AddAPhoto, PinDrop, Settings, Videocam} from "@material-ui/icons";
 import {useMenu} from "../../../providers/MenuProvider";
+import {Global} from "../../../data/Global";
 
 export const FloatingButton = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const {setModalViewScene, setModalSetting} = useMenu();
+    const {setModalViewScene, setModalSetting, setVRSceneToView} = useMenu();
 
     const mainSize = 56;
     const childSize = 40;
@@ -56,6 +57,14 @@ export const FloatingButton = () => {
             icon={<Save />}
             size={childSize}
             onClick={() => console.log('clicked')}
+            background={buttonBackgroundColor}
+        />
+        <ChildButton
+            icon={<Videocam />}
+            size={childSize}
+            onClick={() => {
+                setVRSceneToView("http://renderstuff.com/tools/360-panorama-web-viewer-embed/?image=https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg");
+            }}
             background={buttonBackgroundColor}
         />
     </FloatingMenu>
