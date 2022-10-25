@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {ChildButton, FloatingMenu, MainButton} from "react-floating-button-menu";
 import {Close, Add, Save, CloudUpload, AddAPhoto, PinDrop, Settings, Videocam} from "@material-ui/icons";
 import {useMenu} from "../../../providers/MenuProvider";
-import {Global} from "../../../data/Global";
 
 export const FloatingButton = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);

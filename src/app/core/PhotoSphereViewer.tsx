@@ -118,8 +118,8 @@ export const changeScene = (scene: Scene) => {
         markersPlugin.removeMarkers(markerIds);
     }
     Global.currentScene = scene;
-
-    setTimeout(() => {
+    console.log(Global.viewer)
+    Global.viewer.once('ready', () => {
         scene.markers.forEach(m => {
             markersPlugin.addMarker({
                 id: m.id as string,
@@ -137,7 +137,7 @@ export const changeScene = (scene: Scene) => {
                 }
             });
         });
-    }, 1000);
+    });
 
 }
 

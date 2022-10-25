@@ -12,6 +12,7 @@ import {
 const RenderStuffModal = () => {
     const {VRSceneToView, setVRSceneToView} = useMenu();
     if(!VRSceneToView) return <></>;
+    console.log(VRSceneToView);
     return (
         <MDBModal staticBackdrop={true} show={VRSceneToView !== ""} tabIndex='-1'>
             <MDBModalDialog size={"fullscreen"}>
@@ -20,8 +21,8 @@ const RenderStuffModal = () => {
                         <MDBModalTitle>RenderStuff</MDBModalTitle>
                         <MDBBtn className='btn-close' color='none' onClick={()=>{setVRSceneToView(null)}}></MDBBtn>
                     </MDBModalHeader>
-                    <MDBModalBody>
-                        <iframe width="100%" height="100%" title="someTitle" scrolling="no" src={VRSceneToView}>
+                    <MDBModalBody className="overflow-hidden">
+                        <iframe width="100%" height="100%" title="someTitle" src={VRSceneToView}>
                         </iframe>
                     </MDBModalBody>
                 </MDBModalContent>
