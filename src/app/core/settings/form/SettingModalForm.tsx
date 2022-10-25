@@ -1,5 +1,5 @@
 import React, {FC, useEffect} from 'react';
-import {useForm, UseFormHandleSubmit, UseFormRegister, UseFormSetValue, UseFormStateProps} from "react-hook-form";
+import {UseFormRegister, UseFormSetValue} from "react-hook-form";
 import {useAtom} from "jotai";
 import {dataScenesAtom, settingsAtom} from "../../../atoms/DataAtom";
 import {SettingModel} from "../../../models/DataModel";
@@ -15,7 +15,7 @@ const SettingModalForm:FC<SettingModalProps> = ({register, setValue}) => {
 
     useEffect(() => {
         setValue("initialScene", setting.initialScene);
-    }, [setting]);
+    }, [setValue, setting]);
 
     if(scenes.length === 0) return <></>;
 

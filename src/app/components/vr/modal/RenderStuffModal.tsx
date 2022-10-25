@@ -12,7 +12,6 @@ import {
 const RenderStuffModal = () => {
     const {VRSceneToView, setVRSceneToView} = useMenu();
     if(!VRSceneToView) return <></>;
-    console.log(VRSceneToView);
     return (
         <MDBModal staticBackdrop={true} show={VRSceneToView !== ""} tabIndex='-1'>
             <MDBModalDialog size={"fullscreen"}>
