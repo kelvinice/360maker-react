@@ -117,9 +117,28 @@ export const changeScene = (scene: Scene) => {
         const markerIds = currentMarker.map(m => m.id as string);
         markersPlugin.removeMarkers(markerIds);
     }
-    Global.currentScene = scene;
-    console.log(Global.viewer)
-    Global.viewer.once('ready', () => {
+    if(!Global.currentScene){
+        Global.currentScene = scene;
+        Global.viewer.once('ready', () => {
+            scene.markers.forEach(m => {
+                markersPlugin.addMarker({
+                    id: m.id as string,
+                    longitude: m.location.longitude,
+                    latitude: m.location.latitude,
+                    image: 'asset/pin-blue.png',
+                    width: 32,
+                    height: 32,
+                    anchor: 'bottom center',
+                    tooltip: m.name,
+                    data: {
+                        generated: false,
+                        scene: scene,
+                        marker: m
+                    }
+                });
+            });
+        });
+    }else{
         scene.markers.forEach(m => {
             markersPlugin.addMarker({
                 id: m.id as string,
@@ -137,7 +156,9 @@ export const changeScene = (scene: Scene) => {
                 }
             });
         });
-    });
+    }
+
+
 
 }
 
