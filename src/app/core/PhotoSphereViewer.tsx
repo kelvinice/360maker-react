@@ -92,7 +92,6 @@ const PhotoSphereViewer = () => {
                             toast.error("Scene not found");
                             return;
                         }
-                        console.log(scene)
                         changeScene(scene);
                     });
                 });
@@ -118,40 +117,42 @@ const PhotoSphereViewer = () => {
 
         Global.viewer.on('click', (e, data) => {
             if (!data.rightclick && Global.currentScene) {
-                const newMarker: Marker = {
-                    id: uuidv4(),
-                    name: "New marker",
-                    type: "scene",
-                    location: {
+                if(getMouseState() === MouseState.MarkerPlace) {
+                    const newMarker: Marker = {
+                        id: uuidv4(),
+                        name: "New marker",
+                        type: "scene",
+                        location: {
+                            longitude: data.longitude,
+                            latitude: data.latitude
+                        }
+                    };
+
+                    addMarker(newMarker);
+                    //check if marker already exists
+                    const marker = Global.currentScene.markers.find((m) => m.location.longitude === data.longitude && m.location.latitude === data.latitude);
+                    if (!marker) {
+                        Global.currentScene.markers.push(newMarker);
+                    }
+
+                    // @ts-ignore
+                    markersPlugin.addMarker({
+                        id: newMarker.id as string,
                         longitude: data.longitude,
-                        latitude: data.latitude
-                    }
-                };
-
-                addMarker(newMarker);
-                //check if marker already exists
-                const marker = Global.currentScene.markers.find((m) => m.location.longitude === data.longitude && m.location.latitude === data.latitude);
-                if(!marker){
-                    Global.currentScene.markers.push(newMarker);
+                        latitude: data.latitude,
+                        image: PlaceMarkerIconPath,
+                        width: 32,
+                        height: 32,
+                        anchor: 'bottom center',
+                        tooltip: newMarker.name,
+                        data: {
+                            generated: true,
+                            scene: Global.currentScene,
+                            marker: newMarker
+                        }
+                    });
+                    saveScene();
                 }
-
-                // @ts-ignore
-                markersPlugin.addMarker({
-                    id: newMarker.id as string,
-                    longitude: data.longitude,
-                    latitude: data.latitude,
-                    image: PlaceMarkerIconPath,
-                    width: 32,
-                    height: 32,
-                    anchor: 'bottom center',
-                    tooltip: newMarker.name,
-                    data: {
-                        generated: true,
-                        scene: Global.currentScene,
-                        marker: newMarker
-                    }
-                });
-                saveScene();
             }
         });
 
@@ -220,7 +221,6 @@ export const changeScene = (scene: Scene) => {
             });
         });
     }else{
-        console.log(scene);
         scene.markers.forEach(m => {
             markersPlugin.addMarker({
                 id: m.id as string,
