@@ -10,6 +10,7 @@ import {useAtomCallback} from "jotai/utils";
 import {useMenu} from "../providers/MenuProvider";
 import toast from 'react-hot-toast';
 import {MouseState} from "../constants/MouseState";
+import {PlaceMarkerIconPath} from "../constants/AssetPath";
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
@@ -99,15 +100,20 @@ const PhotoSphereViewer = () => {
                         latitude: data.latitude
                     }
                 };
+
                 addMarker(newMarker);
-                Global.currentScene.markers.push(newMarker);
+                //check if marker already exists
+                const marker = Global.currentScene.markers.find((m) => m.location.longitude === data.longitude && m.location.latitude === data.latitude);
+                if(!marker){
+                    Global.currentScene.markers.push(newMarker);
+                }
 
                 // @ts-ignore
                 markersPlugin.addMarker({
                     id: newMarker.id as string,
                     longitude: data.longitude,
                     latitude: data.latitude,
-                    image: 'asset/pin-blue.png',
+                    image: PlaceMarkerIconPath,
                     width: 32,
                     height: 32,
                     anchor: 'bottom center',
@@ -137,11 +143,8 @@ const PhotoSphereViewer = () => {
     }, [setting])
 
 
-
-
     const saveScene = useAtomCallback(useCallback((get) => {
         const scenes = get(dataScenesAtom);
-        console.log(scenes);
         setScenes([...scenes]);
     }, []))
 
@@ -190,6 +193,7 @@ export const changeScene = (scene: Scene) => {
             });
         });
     }else{
+        console.log(scene);
         scene.markers.forEach(m => {
             markersPlugin.addMarker({
                 id: m.id as string,
@@ -208,9 +212,7 @@ export const changeScene = (scene: Scene) => {
             });
         });
     }
-
-
-
+    Global.currentScene = scene;
 }
 
 export default PhotoSphereViewer;

@@ -1,0 +1,1 @@
+export const PlaceMarkerIconPath = "asset/pin-blue.png";
