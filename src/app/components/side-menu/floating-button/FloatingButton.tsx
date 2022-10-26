@@ -5,7 +5,7 @@ import {useMenu} from "../../../providers/MenuProvider";
 
 export const FloatingButton = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const {setModalViewScene, setModalSetting, setVRSceneToView} = useMenu();
+    const {setModalViewScene, setModalSetting, setVRSceneToView, setMarkerNavigationOpen} = useMenu();
 
     const mainSize = 56;
     const childSize = 40;
@@ -37,7 +37,7 @@ export const FloatingButton = () => {
         <ChildButton
             icon={<PinDrop />}
             size={childSize}
-            onClick={() => console.log('clicked')}
+            onClick={() => setMarkerNavigationOpen(true)}
             background={buttonBackgroundColor}
         />
         <ChildButton

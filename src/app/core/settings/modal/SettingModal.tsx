@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useMenu} from "../../../providers/MenuProvider";
 import {
     MDBBtn, MDBModal,

@@ -13,6 +13,8 @@ type PageContextProps = {
     setModalSetting: Dispatch<SetStateAction<boolean>>
     VRSceneToView: string|null
     setVRSceneToView: Dispatch<SetStateAction<string|null>>
+    MarkerNavigationOpen: boolean
+    setMarkerNavigationOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const initialMenu:PageContextProps = {
@@ -25,7 +27,9 @@ const initialMenu:PageContextProps = {
     modalSetting: false,
     setModalSetting: () => {},
     VRSceneToView: null,
-    setVRSceneToView: () => {}
+    setVRSceneToView: () => {},
+    MarkerNavigationOpen: true,
+    setMarkerNavigationOpen: () => {},
 }
 
 const MenuContext = createContext<PageContextProps>(initialMenu)
@@ -36,6 +40,7 @@ const MenuProvider: FC<WithChildren> = ({children}) => {
     const [modalSetting, setModalSetting] = useState<boolean>(initialMenu.modalSetting)
     const [markerToConfig, setMarkerToConfig] = useState<Marker|null>(initialMenu.markerToConfig)
     const [VRSceneToView, setVRSceneToView] = useState<string|null>(initialMenu.VRSceneToView)
+    const [MarkerNavigationOpen, setMarkerNavigationOpen] = useState<boolean>(initialMenu.MarkerNavigationOpen)
 
     return (
         <MenuContext.Provider
@@ -50,6 +55,8 @@ const MenuProvider: FC<WithChildren> = ({children}) => {
                 setModalSetting,
                 VRSceneToView,
                 setVRSceneToView,
+                MarkerNavigationOpen,
+                setMarkerNavigationOpen,
             }}
         >
             {children}
