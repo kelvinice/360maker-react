@@ -47,6 +47,24 @@ const PhotoSphereViewer = () => {
         toast.success("Marker added");
     }, []));
 
+    const getScenes = useAtomCallback(useCallback((get) => {
+        return get(dataScenesAtom);
+    }, []));
+
+    const getCurrentScene = async (targetSceneId: string) => {
+        const scenes = await getScenes();
+        return scenes.find(scene => scene.id === targetSceneId);
+    };
+
+    const getMarker = useAtomCallback(useCallback(async (get, set, markerId: string) => {
+        const currentScene = await getCurrentScene(Global.currentScene.id as string);
+        if(!currentScene){
+            toast.error("Scene not found");
+            return;
+        }
+        return await currentScene.markers.find(marker => marker.id === markerId);
+    }, []));
+
     useEffect(()=>{
         if(!ref || !ref.current || Global.viewer)
             return;
@@ -65,10 +83,19 @@ const PhotoSphereViewer = () => {
         markersPlugin.on('select-marker', (e, marker) => {
             const mouseState = getMouseState();
             if(mouseState === MouseState.Cursor){
-                const scene = scenes.find(scene => scene.id === marker.config.data.marker.targetSceneId);
-                if(scene){
-                    changeScene(scene);
-                }
+                getMarker(marker.id).then(marker => {
+                    if(!marker) return;
+                    getCurrentScene(
+                        marker.targetSceneId as string
+                    ).then(scene => {
+                        if(!scene){
+                            toast.error("Scene not found");
+                            return;
+                        }
+                        console.log(scene)
+                        changeScene(scene);
+                    });
+                });
             }else if(mouseState === MouseState.Setting){
                 const targetMarker = Global.currentScene.markers.find((m) => m.id === marker.data.marker.id);
                 if(!targetMarker){
