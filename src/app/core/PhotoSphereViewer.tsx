@@ -11,6 +11,7 @@ import {useMenu} from "../providers/MenuProvider";
 import toast from 'react-hot-toast';
 import {MouseState} from "../constants/MouseState";
 import {PlaceMarkerIconPath} from "../constants/AssetPath";
+import {MarkerType} from "../constants/MarkerType";
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
@@ -121,7 +122,7 @@ const PhotoSphereViewer = () => {
                     const newMarker: Marker = {
                         id: uuidv4(),
                         name: "New marker",
-                        type: "scene",
+                        type: MarkerType.place,
                         location: {
                             longitude: data.longitude,
                             latitude: data.latitude
