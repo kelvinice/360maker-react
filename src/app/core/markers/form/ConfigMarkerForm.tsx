@@ -1,9 +1,8 @@
 import React, {FC} from 'react';
-import { UseFormRegister, UseFormWatch, UseFormSetValue } from 'react-hook-form';
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import {ConfigMarkerProps} from "../modal/ConfigMarkerModal";
 import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../atoms/DataAtom";
-import {useEffect} from 'react';
 import { useMenu } from '../../../providers/MenuProvider';
 import Select from 'react-select';
 
@@ -18,7 +17,7 @@ const ConfigMarkerForm: FC<ConfigMarkerFormProps> = ({register, setValue}) => {
 
     return (
         <form>
-            <div className="form-group">
+            <div className="form-group mb-3">
                 <label htmlFor="targetSceneId" className="fw-bold">Target Scene</label>
                 <Select className="form-control" id="targetSceneId"
                     options={scenes?.map((scene) => ({value: scene.id, label: scene.name}))}
@@ -30,6 +29,10 @@ const ConfigMarkerForm: FC<ConfigMarkerFormProps> = ({register, setValue}) => {
                         setValue("targetSceneId", e?.value as string);
                     }}
                     />
+            </div>
+            <div className="form-group mb-3">
+                <label htmlFor="targetSceneId" className="fw-bold">Tooltip</label>
+                <input type="text" className="form-control" id="tooltip" {...register("tooltip")} />
             </div>
         </form>
     );

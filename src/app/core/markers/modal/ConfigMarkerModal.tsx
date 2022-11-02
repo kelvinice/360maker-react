@@ -9,17 +9,12 @@ import {
     MDBModalTitle
 } from "mdb-react-ui-kit";
 import {useMenu} from "../../../providers/MenuProvider";
-import {useAtom} from "jotai";
-import {dataScenesAtom} from "../../../atoms/DataAtom";
-import {useForm} from "react-hook-form";
-import ConfigMarkerForm from "../form/ConfigMarkerForm";
-import {Global} from "../../../data/Global";
-import toast from "react-hot-toast";
 import PlaceMarkerConfig from "../place-marker/PlaceMarkerConfig";
 import {MarkerType} from "../../../constants/MarkerType";
 
 export type ConfigMarkerProps = {
     targetSceneId: string;
+    tooltip: string;
 }
 
 const ConfigMarkerModal = () => {

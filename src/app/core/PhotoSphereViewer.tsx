@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 import {MouseState} from "../constants/MouseState";
 import {PlaceMarkerIconPath} from "../constants/AssetPath";
 import {MarkerType} from "../constants/MarkerType";
+import MarkerIconByType from "../utility/MarkerIconByType";
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
@@ -188,6 +189,28 @@ const PhotoSphereViewer = () => {
 };
 
 
+function initMarkerOnScene(scene: Scene) {
+    const markersPlugin = Global.viewer.getPlugin(MarkersPlugin);
+    if(!markersPlugin)
+        return;
+    scene.markers.forEach(m => {
+        markersPlugin.addMarker({
+            id: m.id as string,
+            longitude: m.location.longitude,
+            latitude: m.location.latitude,
+            image: MarkerIconByType(m.type),
+            width: 32,
+            height: 32,
+            anchor: 'bottom center',
+            tooltip: m.tooltip || m.name,
+            data: {
+                generated: false,
+                scene: scene,
+                marker: m
+            }
+        });
+    });
+}
 
 export const changeScene = (scene: Scene) => {
     Global.viewer.setPanorama(scene.path);
@@ -203,42 +226,10 @@ export const changeScene = (scene: Scene) => {
     if(!Global.currentScene){
         Global.currentScene = scene;
         Global.viewer.once('ready', () => {
-            scene.markers.forEach(m => {
-                markersPlugin.addMarker({
-                    id: m.id as string,
-                    longitude: m.location.longitude,
-                    latitude: m.location.latitude,
-                    image: 'asset/pin-blue.png',
-                    width: 32,
-                    height: 32,
-                    anchor: 'bottom center',
-                    tooltip: m.name,
-                    data: {
-                        generated: false,
-                        scene: scene,
-                        marker: m
-                    }
-                });
-            });
+            initMarkerOnScene(scene);
         });
     }else{
-        scene.markers.forEach(m => {
-            markersPlugin.addMarker({
-                id: m.id as string,
-                longitude: m.location.longitude,
-                latitude: m.location.latitude,
-                image: 'asset/pin-blue.png',
-                width: 32,
-                height: 32,
-                anchor: 'bottom center',
-                tooltip: m.name,
-                data: {
-                    generated: false,
-                    scene: scene,
-                    marker: m
-                }
-            });
-        });
+        initMarkerOnScene(scene);
     }
     Global.currentScene = scene;
 }

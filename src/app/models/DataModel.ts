@@ -20,6 +20,7 @@ export interface Marker {
         longitude: number
     }
     targetSceneId?: string
+    tooltip?: string
 }
 
 export interface SettingModel {
