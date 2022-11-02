@@ -111,8 +111,8 @@ const PhotoSphereViewer = () => {
                 }
                 deleteMarker(targetMarker);
                 Global.currentScene.markers = Global.currentScene.markers.filter((m) => m.id !== marker.data.marker.id);
-                // @ts-ignore
-                markersPlugin.removeMarker(marker);
+                if(markersPlugin)
+                    markersPlugin.removeMarker(marker.id);
             }
         });
 

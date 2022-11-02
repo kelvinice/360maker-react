@@ -33,7 +33,7 @@ const ViewSceneTable = () => {
     return (
         <div>
             {/*Table of scene*/}
-            <table className="table table-striped">
+            <table className="table table-striped table-responsive">
                 <thead>
                 <tr>
                     <th scope="col">#</th>

@@ -5,7 +5,7 @@ import {useMenu} from "../../../providers/MenuProvider";
 
 export const FloatingButton = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const {setModalViewScene, setModalSetting, setVRSceneToView, setMarkerNavigationOpen} = useMenu();
+    const {setModalViewScene, setModalSetting, setMarkerNavigationOpen} = useMenu();
 
     const mainSize = 56;
     const childSize = 40;
@@ -56,14 +56,6 @@ export const FloatingButton = () => {
             icon={<Save />}
             size={childSize}
             onClick={() => console.log('clicked')}
-            background={buttonBackgroundColor}
-        />
-        <ChildButton
-            icon={<Videocam />}
-            size={childSize}
-            onClick={() => {
-                setVRSceneToView("http://renderstuff.com/tools/360-panorama-web-viewer-embed/?image=https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg");
-            }}
             background={buttonBackgroundColor}
         />
     </FloatingMenu>
