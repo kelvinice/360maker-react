@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../../atoms/DataAtom";
 import {SweetAlert} from "../../../../constants/SweetAlert";
@@ -8,6 +8,7 @@ import {changeScene} from "../../../PhotoSphereViewer";
 
 const ViewSceneTable = () => {
     const [scene, setScene] = useAtom(dataScenesAtom);
+    const [search, setSearch] = useState<string>("");
 
     const deleteScene = (id: string) => {
         SweetAlert.fire({
@@ -35,6 +36,14 @@ const ViewSceneTable = () => {
     return (
         <div>
             {/*Table of scene*/}
+            <div>
+                {/*input search*/}
+                <div className="input-group mb-3">
+                    <input type="text" className="form-control" placeholder="Search scene" aria-label="Search scene" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                </div>
+
+            </div>
+
             <table className="table table-striped table-responsive">
                 <thead>
                 <tr>
@@ -46,7 +55,9 @@ const ViewSceneTable = () => {
                 </thead>
                 <tbody>
                 {
-                    scene?.map((scene, index) => (
+                    scene?.filter(
+                        (scene) => scene.name.toLowerCase().includes(search.toLowerCase())
+                    ).map((scene, index) => (
                         <tr key={scene.id}>
                             <th scope="row">{index + 1}</th>
                             <td>{scene.name}</td>

@@ -17,7 +17,7 @@ const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
     const [scenes, setScenes] = useAtom(dataScenesAtom);
     const [setting] = useAtom(settingsAtom);
-    const {setMarkerToConfig} = useMenu();
+    const {setMarkerToConfig, setVideoToView} = useMenu();
 
     const deleteMarker = useAtomCallback(useCallback((get, set, marker: Marker) => {
         const scenes = get(dataScenesAtom);
@@ -76,7 +76,6 @@ const PhotoSphereViewer = () => {
             return;
 
         Global.viewer = new Viewer({
-            // panorama: "https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/tunnel.jpg",
             container: ref.current,
             plugins: [
                 [MarkersPlugin, {
@@ -91,15 +90,19 @@ const PhotoSphereViewer = () => {
             if(mouseState === MouseState.Cursor){
                 getMarker(marker.id).then(marker => {
                     if(!marker) return;
-                    getCurrentScene(
-                        marker.targetSceneId as string
-                    ).then(scene => {
-                        if(!scene){
-                            toast.error("Scene not found");
-                            return;
-                        }
-                        changeScene(scene);
-                    });
+                    if(marker.type === MarkerType.place){
+                        getCurrentScene(
+                            marker.targetSceneId as string
+                        ).then(scene => {
+                            if(!scene){
+                                toast.error("Scene not found");
+                                return;
+                            }
+                            changeScene(scene);
+                        });
+                    }else if(marker.type === MarkerType.video){
+                        setVideoToView(marker.mediaPath as string);
+                    }
                 });
             }else if(mouseState === MouseState.Setting){
                 const targetMarker = Global.currentScene.markers.find((m) => m.id === marker.data.marker.id);

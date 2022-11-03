@@ -1,17 +1,17 @@
 import React, {FC} from 'react';
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import {ConfigMarkerProps} from "../modal/ConfigMarkerModal";
 import {useAtom} from "jotai";
-import {dataScenesAtom} from "../../../atoms/DataAtom";
-import { useMenu } from '../../../providers/MenuProvider';
+import {dataScenesAtom} from "../../../../../atoms/DataAtom";
+import { useMenu } from '../../../../../providers/MenuProvider';
 import Select from 'react-select';
+import {ConfigMarkerProps} from "../PlaceMarkerConfig";
 
 type ConfigMarkerFormProps = {
     register: UseFormRegister<ConfigMarkerProps>,
     setValue: UseFormSetValue<ConfigMarkerProps>,
 }
 
-const ConfigMarkerForm: FC<ConfigMarkerFormProps> = ({register, setValue}) => {
+const PlaceConfigMarkerForm: FC<ConfigMarkerFormProps> = ({register, setValue}) => {
     const [scenes] = useAtom(dataScenesAtom);
     const {markerToConfig} = useMenu();
 
@@ -38,4 +38,4 @@ const ConfigMarkerForm: FC<ConfigMarkerFormProps> = ({register, setValue}) => {
     );
 };
 
-export default ConfigMarkerForm;
+export default PlaceConfigMarkerForm;

@@ -1,22 +1,26 @@
 import React, {useEffect} from 'react';
 import {MDBBtn, MDBModalBody, MDBModalFooter} from "mdb-react-ui-kit";
-import PlaceConfigMarkerForm from "../form/ConfigMarkerForm";
-import {useMenu} from "../../../providers/MenuProvider";
+import {useMenu} from "../../../../providers/MenuProvider";
 import {useForm} from "react-hook-form";
-import {ConfigMarkerProps} from "../modal/ConfigMarkerModal";
-import {Global} from "../../../data/Global";
+import {Global} from "../../../../data/Global";
 import toast from "react-hot-toast";
 import {useAtom} from "jotai";
-import {dataScenesAtom} from "../../../atoms/DataAtom";
+import {dataScenesAtom} from "../../../../atoms/DataAtom";
+import VideoConfigMarkerForm from "./form/VideoConfigMarkerForm";
 
-const PlaceMarkerConfig = () => {
+export type ConfigMarkerProps = {
+    mediaPath: string;
+    tooltip: string;
+}
+
+const VideoMarkerConfig = () => {
     const [scenes, setScene] = useAtom(dataScenesAtom);
     const {register, handleSubmit, setValue}= useForm<ConfigMarkerProps>();
     const {markerToConfig, setMarkerToConfig} = useMenu();
 
     useEffect(() => {
         if (markerToConfig) {
-            setValue("targetSceneId", markerToConfig.targetSceneId as string);
+            setValue("mediaPath", markerToConfig.mediaPath as string);
             setValue("tooltip", markerToConfig.tooltip as string);
         }
     }, [markerToConfig]);
@@ -28,7 +32,7 @@ const PlaceMarkerConfig = () => {
         const marker = scene?.markers.find((marker) => marker.id === markerToConfig?.id);
 
         if (marker) {
-            marker.targetSceneId = data.targetSceneId;
+            marker.mediaPath = data.mediaPath;
             marker.tooltip = data.tooltip;
             const newSceneObject = [...scenes];
             setScene(newSceneObject);
@@ -43,7 +47,7 @@ const PlaceMarkerConfig = () => {
     return (
         <>
             <MDBModalBody>
-                <PlaceConfigMarkerForm register={register} setValue={setValue} />
+                <VideoConfigMarkerForm register={register} setValue={setValue} />
             </MDBModalBody>
             <MDBModalFooter>
                 <MDBBtn color='primary' onClick={handleSubmit(submit)}>Save Config</MDBBtn>
@@ -52,4 +56,4 @@ const PlaceMarkerConfig = () => {
     );
 };
 
-export default PlaceMarkerConfig;
+export default VideoMarkerConfig;

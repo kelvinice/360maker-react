@@ -15,6 +15,7 @@ import FileManagement from "./core/files/FileManagement";
 import {useAtom} from "jotai";
 import {dataScenesAtom, isDevAtom, settingsAtom} from "./atoms/DataAtom";
 import {initialDataScene, initialDataSetting} from "./data/InitialData";
+import {tryParseJSON} from "./utility/Utility";
 
 const App = () => {
     const {MarkerNavigationOpen} = useMenu();
@@ -44,29 +45,41 @@ const AppWrapper = () => {
     );
 }
 
+
 const DataInit:FC<WithChildren> = ({children}) => {
     const [ready, setReady] = useState(false);
     const [scene, setScene] = useAtom(dataScenesAtom);
     const [setting, setSetting] = useAtom(settingsAtom);
-    const [isDev, setIsDev] = useAtom(isDevAtom);
+    const [, setIsDev] = useAtom(isDevAtom);
     let firstLoad = true;
 
     const init = async () => {
         const is_dev:boolean = process.env.REACT_APP_IS_DEV === "true";
         const dataPath = process.env.REACT_APP_DATA_URL;
         setIsDev(is_dev);
+        if(is_dev && scene && setting){
+            return;
+        }
 
-        if(!dataPath || (is_dev && (!scene || !setting))){
+        if(!dataPath){
             setScene(initialDataScene);
             setSetting(initialDataSetting);
             return;
         }
-
-        const file = await FileManagement.readFile(dataPath);
-        if(file){
-            const data = JSON.parse(file);
-            setScene(data.scenes);
-            setSetting(data.setting);
+        try {
+            const res = await FileManagement.readFile(dataPath);
+            const file = await res.text();
+            if(res.status === 200){
+                const data = tryParseJSON(file);
+                if(!data){
+                    throw new Error("Invalid JSON");
+                }
+                setScene(data.scenes);
+                setSetting(data.setting);
+            }
+        }catch (e) {
+            console.error(e);
+            setReady(true);
         }
     }
 

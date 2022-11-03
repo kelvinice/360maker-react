@@ -21,6 +21,8 @@ export interface Marker {
     }
     targetSceneId?: string
     tooltip?: string
+    mediaPath?: string
+    description?: string
 }
 
 export interface SettingModel {

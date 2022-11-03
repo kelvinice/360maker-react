@@ -21,7 +21,7 @@ const RenderStuffModal = () => {
                         <MDBBtn className='btn-close' color='none' onClick={()=>{setVRSceneToView(null)}}></MDBBtn>
                     </MDBModalHeader>
                     <MDBModalBody className="overflow-hidden">
-                        <iframe width="100%" height="100%" title="someTitle" src={VRSceneToView}>
+                        <iframe width="100%" height="100%" title="someTitle" src={`http://renderstuff.com/tools/360-panorama-web-viewer-embed/?image=${VRSceneToView}`}>
                         </iframe>
                     </MDBModalBody>
                 </MDBModalContent>

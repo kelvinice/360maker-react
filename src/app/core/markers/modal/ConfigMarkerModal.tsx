@@ -9,13 +9,9 @@ import {
     MDBModalTitle
 } from "mdb-react-ui-kit";
 import {useMenu} from "../../../providers/MenuProvider";
-import PlaceMarkerConfig from "../place-marker/PlaceMarkerConfig";
+import PlaceMarkerConfig from "./place-marker/PlaceMarkerConfig";
 import {MarkerType} from "../../../constants/MarkerType";
-
-export type ConfigMarkerProps = {
-    targetSceneId: string;
-    tooltip: string;
-}
+import VideoMarkerConfig from "./video-marker/VideoMarkerConfig";
 
 const ConfigMarkerModal = () => {
     const {markerToConfig, setMarkerToConfig} = useMenu();
@@ -34,6 +30,9 @@ const ConfigMarkerModal = () => {
                             <>
                                 {
                                     markerToConfig.type === MarkerType.place && <PlaceMarkerConfig />
+                                }
+                                {
+                                    markerToConfig.type === MarkerType.video && <VideoMarkerConfig />
                                 }
                             </>
                         }

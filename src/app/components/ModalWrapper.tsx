@@ -6,6 +6,7 @@ import SettingModal from "../core/settings/modal/SettingModal";
 import { useMenu } from "../providers/MenuProvider";
 import RenderStuffModal from "./vr/modal/RenderStuffModal";
 import DataImportModal from "./data/DataImportModal";
+import ViewVideoModal from "./media/ViewVideoModal";
 
 const ModalWrapper = () => {
     const {markerToConfig, VRSceneToView} = useMenu();
@@ -18,6 +19,7 @@ const ModalWrapper = () => {
             {markerToConfig && <ConfigMarkerModal />}
             <SettingModal />
             <DataImportModal />
+            <ViewVideoModal />
         </>
     )
 }
