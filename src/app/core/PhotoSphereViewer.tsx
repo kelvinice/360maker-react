@@ -10,7 +10,6 @@ import {useAtomCallback} from "jotai/utils";
 import {useMenu} from "../providers/MenuProvider";
 import toast from 'react-hot-toast';
 import {MouseState} from "../constants/MouseState";
-import {PlaceMarkerIconPath} from "../constants/AssetPath";
 import {MarkerType} from "../constants/MarkerType";
 import MarkerIconByType from "../utility/MarkerIconByType";
 
@@ -22,7 +21,7 @@ const PhotoSphereViewer = () => {
 
     const deleteMarker = useAtomCallback(useCallback((get, set, marker: Marker) => {
         const scenes = get(dataScenesAtom);
-        const currentScene = scenes.find(scene => scene.id === Global.currentScene.id);
+        const currentScene = scenes?.find(scene => scene.id === Global.currentScene.id);
         if(!currentScene){
             toast.error("Scene not found");
             return;
@@ -33,12 +32,15 @@ const PhotoSphereViewer = () => {
             return;
         }
         currentScene.markers.splice(index, 1);
-        set(dataScenesAtom, [...scenes]);
+        if(scenes)
+            set(dataScenesAtom, [...scenes]);
         toast.success("Marker deleted");
     }, []));
 
     const addMarker = useAtomCallback(useCallback((get, set, marker: Marker) => {
         const scenes = get(dataScenesAtom);
+        if(!scenes)
+            return;
         const currentScene = scenes.find(scene => scene.id === Global.currentScene.id);
         if(!currentScene){
             toast.error("Scene not found");
@@ -55,6 +57,8 @@ const PhotoSphereViewer = () => {
 
     const getCurrentScene = async (targetSceneId: string) => {
         const scenes = await getScenes();
+        if(!scenes)
+            return;
         return scenes.find(scene => scene.id === targetSceneId);
     };
 
@@ -119,40 +123,52 @@ const PhotoSphereViewer = () => {
 
         Global.viewer.on('click', (e, data) => {
             if (!data.rightclick && Global.currentScene) {
-                if(getMouseState() === MouseState.MarkerPlace) {
+                const mouseState = getMouseState();
+                let type: string|null = null;
+
+                switch (mouseState) {
+                    case MouseState.MarkerPlace:
+                        type = MarkerType.place;
+                        break;
+                    case MouseState.MarkerVideo:
+                        type = MarkerType.video;
+                        break;
+                }
+
+                if(type){
                     const newMarker: Marker = {
                         id: uuidv4(),
                         name: "New marker",
-                        type: MarkerType.place,
+                        type: type,
                         location: {
                             longitude: data.longitude,
                             latitude: data.latitude
                         }
                     };
-
                     addMarker(newMarker);
                     //check if marker already exists
-                    const marker = Global.currentScene.markers.find((m) => m.location.longitude === data.longitude && m.location.latitude === data.latitude);
+                    const marker = Global.currentScene.markers.find((m) => m.id === newMarker.id);
+
                     if (!marker) {
                         Global.currentScene.markers.push(newMarker);
                     }
 
-                    // @ts-ignore
-                    markersPlugin.addMarker({
-                        id: newMarker.id as string,
-                        longitude: data.longitude,
-                        latitude: data.latitude,
-                        image: PlaceMarkerIconPath,
-                        width: 32,
-                        height: 32,
-                        anchor: 'bottom center',
-                        tooltip: newMarker.name,
-                        data: {
-                            generated: true,
-                            scene: Global.currentScene,
-                            marker: newMarker
-                        }
-                    });
+                    if(markersPlugin)
+                        markersPlugin.addMarker({
+                            id: newMarker.id as string,
+                            longitude: data.longitude,
+                            latitude: data.latitude,
+                            image: MarkerIconByType(type),
+                            width: 32,
+                            height: 32,
+                            anchor: 'bottom center',
+                            tooltip: newMarker.name,
+                            data: {
+                                generated: true,
+                                scene: Global.currentScene,
+                                marker: newMarker
+                            }
+                        });
                     saveScene();
                 }
             }
@@ -163,7 +179,7 @@ const PhotoSphereViewer = () => {
     useEffect(() => {
         if(!Global.firstLoad)
             return;
-        if(!setting)
+        if(!setting || !scenes)
             return;
         const currentScene = scenes.find(scene => scene.id === setting.initialScene);
         if(currentScene){
@@ -175,6 +191,8 @@ const PhotoSphereViewer = () => {
 
     const saveScene = useAtomCallback(useCallback((get) => {
         const scenes = get(dataScenesAtom);
+        if(!scenes)
+            return;
         setScenes([...scenes]);
     }, []))
 

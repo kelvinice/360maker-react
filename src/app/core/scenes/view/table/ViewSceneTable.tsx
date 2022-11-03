@@ -20,6 +20,8 @@ const ViewSceneTable = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
+                if(!scene)
+                    return;
                 setScene(scene.filter((scene) => scene.id !== id));
                 toast.success("Scene deleted");
             }
@@ -44,7 +46,7 @@ const ViewSceneTable = () => {
                 </thead>
                 <tbody>
                 {
-                    scene.map((scene, index) => (
+                    scene?.map((scene, index) => (
                         <tr key={scene.id}>
                             <th scope="row">{index + 1}</th>
                             <td>{scene.name}</td>

@@ -17,7 +17,8 @@ const AddSceneModalForm = () => {
     const submit = (data: Scene) => {
         data.id = uuidv4();
         data.markers = [];
-        setScenes([...scenes, data]);
+        if(scenes)
+            setScenes([...scenes, data]);
         toast.success("Scene added");
         setModalAddScene(false);
         reset();

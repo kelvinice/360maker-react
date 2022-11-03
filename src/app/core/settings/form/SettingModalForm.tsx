@@ -14,10 +14,10 @@ const SettingModalForm:FC<SettingModalProps> = ({register, setValue}) => {
     const [setting,] = useAtom(settingsAtom);
 
     useEffect(() => {
-        setValue("initialScene", setting.initialScene);
+        setValue("initialScene", setting?.initialScene as string);
     }, [setValue, setting]);
 
-    if(scenes.length === 0) return <></>;
+    if(scenes && scenes.length === 0) return <></>;
 
     return (
         <>
@@ -26,7 +26,7 @@ const SettingModalForm:FC<SettingModalProps> = ({register, setValue}) => {
                     <label htmlFor="initialScene" className="fw-bold">Initial Scene</label>
                     <select className="form-control" id="initialScene" {...register("initialScene", {required: true})}>
                         {
-                            scenes.map(scene => (
+                            scenes?.map(scene => (
                                 <option key={scene.id} value={scene.id}>{scene.name}</option>
                             ))
                         }
