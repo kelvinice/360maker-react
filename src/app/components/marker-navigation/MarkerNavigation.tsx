@@ -23,7 +23,7 @@ const MarkerNavigation = () => {
     return (
         <Draggable handle=".btn-drag" nodeRef={nodeRef}>
             <div className="bg-white rounded-3 shadow-2xl p-2" ref={nodeRef}
-                 style={{zIndex: "99999", top: 10, left: 10, position: "absolute"}}>
+                 style={{zIndex: "99999", top: 0, left: 0, position: "absolute"}}>
                 <div className="d-flex gap-2">
                     <button className="btn bg-light btn-sm btn-drag">
                         <OpenWith/>

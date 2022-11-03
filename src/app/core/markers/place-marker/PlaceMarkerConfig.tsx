@@ -22,6 +22,8 @@ const PlaceMarkerConfig = () => {
     }, [markerToConfig]);
 
     const submit = (data: ConfigMarkerProps) => {
+        if(!scenes)
+            return;
         const scene = scenes?.find((scene) => scene.id === Global.currentScene.id);
         const marker = scene?.markers.find((marker) => marker.id === markerToConfig?.id);
 
