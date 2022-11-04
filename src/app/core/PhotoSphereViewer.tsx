@@ -1,6 +1,7 @@
 import React, {createRef, useCallback, useEffect} from 'react';
 import {Viewer} from "photo-sphere-viewer";
 import {MarkersPlugin} from "photo-sphere-viewer/dist/plugins/markers";
+import {GyroscopePlugin} from "photo-sphere-viewer/dist/plugins/gyroscope";
 import {Global} from "../data/Global";
 import {Marker, Scene} from "../models/DataModel";
 import {v4 as uuidv4} from "uuid";
@@ -82,7 +83,11 @@ const PhotoSphereViewer = () => {
                 [MarkersPlugin, {
                     markers: [],
                 }],
-            ]
+                [GyroscopePlugin, {
+                    touchmove: true,
+                }]
+            ],
+            mousemove: true,
         })
         const markersPlugin = Global.viewer.getPlugin(MarkersPlugin);
         // @ts-ignore
