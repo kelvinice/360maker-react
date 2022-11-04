@@ -19,16 +19,21 @@ import {tryParseJSON} from "./utility/Utility";
 
 const App = () => {
     const {MarkerNavigationOpen} = useMenu();
+    const [isDev] = useAtom(isDevAtom);
+
     return (
         <div className="App">
             <PhotoSphereViewer />
-            <div className="ui-menu top-0 end-0 m-2">
-                <FloatingButton />
-            </div>
+            {!isDev &&
+                <div className="ui-menu top-0 end-0 m-2">
+                    <FloatingButton />
+                </div>
+            }
+
             <div className="ui-menu start-0 top-50">
                 <VRButton />
             </div>
-            {MarkerNavigationOpen && <MarkerNavigation />}
+            {MarkerNavigationOpen && !isDev && <MarkerNavigation />}
             <ModalWrapper />
         </div>
     );

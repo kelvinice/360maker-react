@@ -85,10 +85,19 @@ const PhotoSphereViewer = () => {
                 }],
                 [GyroscopePlugin, {
                     touchmove: true,
+                    moveMode: 'smooth',
                 }]
             ],
             mousemove: true,
+            //fullscreen mode
+
+
         })
+
+
+
+
+
         const markersPlugin = Global.viewer.getPlugin(MarkersPlugin);
         // @ts-ignore
         markersPlugin.on('select-marker', (e, marker) => {
@@ -268,8 +277,16 @@ export const changeScene = (scene: Scene) => {
     }
     if(!Global.currentScene){
         Global.currentScene = scene;
+
         Global.viewer.once('ready', () => {
             initMarkerOnScene(scene);
+
+            const gyroPlugin = Global.viewer.getPlugin(GyroscopePlugin);
+            try{
+                gyroPlugin && gyroPlugin?.start();
+            }catch (e){
+                console.log(e);
+            }
         });
     }else{
         initMarkerOnScene(scene);
