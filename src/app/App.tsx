@@ -24,7 +24,7 @@ const App = () => {
     return (
         <div className="App">
             <PhotoSphereViewer />
-            {!isDev &&
+            {isDev &&
                 <div className="ui-menu top-0 end-0 m-2">
                     <FloatingButton />
                 </div>
@@ -33,7 +33,7 @@ const App = () => {
             <div className="ui-menu start-0 top-50">
                 <VRButton />
             </div>
-            {MarkerNavigationOpen && !isDev && <MarkerNavigation />}
+            {MarkerNavigationOpen && isDev && <MarkerNavigation />}
             <ModalWrapper />
         </div>
     );
