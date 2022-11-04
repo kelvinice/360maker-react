@@ -12,12 +12,13 @@ import toast from 'react-hot-toast';
 import {MouseState} from "../constants/MouseState";
 import {MarkerType} from "../constants/MarkerType";
 import MarkerIconByType from "../utility/MarkerIconByType";
+import Swal from "sweetalert2";
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
     const [scenes, setScenes] = useAtom(dataScenesAtom);
     const [setting] = useAtom(settingsAtom);
-    const {setMarkerToConfig, setVideoToView} = useMenu();
+    const {setMarkerToConfig, setVideoToView, setImageToView} = useMenu();
 
     const deleteMarker = useAtomCallback(useCallback((get, set, marker: Marker) => {
         const scenes = get(dataScenesAtom);
@@ -102,7 +103,17 @@ const PhotoSphereViewer = () => {
                         });
                     }else if(marker.type === MarkerType.video){
                         setVideoToView(marker.mediaPath as string);
+                    }else if (marker.type === MarkerType.image){
+                        setImageToView(marker.mediaPath as string);
+                    }else if (marker.type === MarkerType.description){
+                        Swal.fire({
+                            title: marker.tooltip ? marker.tooltip : "Information",
+                            text: marker.description as string,
+                            icon: 'info',
+                            confirmButtonText: 'Ok'
+                        })
                     }
+
                 });
             }else if(mouseState === MouseState.Setting){
                 const targetMarker = Global.currentScene.markers.find((m) => m.id === marker.data.marker.id);
@@ -135,6 +146,12 @@ const PhotoSphereViewer = () => {
                         break;
                     case MouseState.MarkerVideo:
                         type = MarkerType.video;
+                        break;
+                    case MouseState.MarkerImage:
+                        type = MarkerType.image;
+                        break;
+                    case MouseState.MarkerDescription:
+                        type = MarkerType.description;
                         break;
                 }
 

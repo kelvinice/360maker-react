@@ -7,6 +7,7 @@ import { useMenu } from "../providers/MenuProvider";
 import RenderStuffModal from "./vr/modal/RenderStuffModal";
 import DataImportModal from "./data/DataImportModal";
 import ViewVideoModal from "./media/ViewVideoModal";
+import ViewImageModal from "./media/ViewImageModal";
 
 const ModalWrapper = () => {
     const {markerToConfig, VRSceneToView} = useMenu();
@@ -20,6 +21,7 @@ const ModalWrapper = () => {
             <SettingModal />
             <DataImportModal />
             <ViewVideoModal />
+            <ViewImageModal />
         </>
     )
 }

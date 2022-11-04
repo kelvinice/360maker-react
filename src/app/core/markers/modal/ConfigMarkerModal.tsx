@@ -12,6 +12,8 @@ import {useMenu} from "../../../providers/MenuProvider";
 import PlaceMarkerConfig from "./place-marker/PlaceMarkerConfig";
 import {MarkerType} from "../../../constants/MarkerType";
 import VideoMarkerConfig from "./video-marker/VideoMarkerConfig";
+import ImageMarkerConfig from "./image-marker/ImageMarkerConfig";
+import DescriptionMarkerConfig from "./description-marker/DescriptionMarkerConfig";
 
 const ConfigMarkerModal = () => {
     const {markerToConfig, setMarkerToConfig} = useMenu();
@@ -33,6 +35,12 @@ const ConfigMarkerModal = () => {
                                 }
                                 {
                                     markerToConfig.type === MarkerType.video && <VideoMarkerConfig />
+                                }
+                                {
+                                    markerToConfig.type === MarkerType.image && <ImageMarkerConfig />
+                                }
+                                {
+                                    markerToConfig.type === MarkerType.description && <DescriptionMarkerConfig />
                                 }
                             </>
                         }
