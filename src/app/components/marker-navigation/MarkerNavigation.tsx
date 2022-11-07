@@ -29,6 +29,7 @@ const MouseStateButton = (props: { targetMouseState: MouseState, color : string,
 const MarkerNavigation = () => {
     const {setMarkerNavigationOpen} = useMenu();
     const nodeRef = React.useRef(null);
+    const [mouseState, setMouseState] = useAtom(mouseStateAtom);
 
     const markers = [
         {
@@ -76,8 +77,8 @@ const MarkerNavigation = () => {
 
                     <MDBDropdown group>
                         <MDBDropdownToggle className={clsx({
-                            "active": currentMarker !== undefined,
-                        }, "btn btn-primary")}>
+                            "active": markers.find(marker => marker.targetMouseState === getMouseState()) !== undefined,
+                        }, "btn btn-sm")}>
                             {
                                 !currentMarker ? <PinDropSharp /> : currentMarker.icon
                             }
