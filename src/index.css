@@ -1,4 +1,3 @@
-
 body {
   margin: 0;
   font-family: Roboto, Helvetica, Arial, sans-serif;
@@ -9,4 +8,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.flat-a a {
+  padding: 0;
 }
