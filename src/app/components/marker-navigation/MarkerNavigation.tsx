@@ -6,7 +6,7 @@ import {useAtom} from "jotai";
 import {mouseStateAtom} from "../../atoms/DataAtom";
 import clsx from "clsx";
 import {MouseState} from "../../constants/MouseState";
-import {MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBDropdown, MDBBtn} from "mdb-react-ui-kit";
+import {MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBDropdown} from "mdb-react-ui-kit";
 import {useAtomCallback} from "jotai/utils";
 
 
@@ -29,7 +29,6 @@ const MouseStateButton = (props: { targetMouseState: MouseState, color : string,
 const MarkerNavigation = () => {
     const {setMarkerNavigationOpen} = useMenu();
     const nodeRef = React.useRef(null);
-    const [mouseState, setMouseState] = useAtom(mouseStateAtom);
 
     const markers = [
         {
@@ -54,11 +53,9 @@ const MarkerNavigation = () => {
         }
     ]
 
-    const getMouseState = useAtomCallback(useCallback((get, set) => {
+    const getMouseState = useAtomCallback(useCallback((get) => {
         return get(mouseStateAtom);
     }, []));
-
-    console.log(getMouseState());
 
     const currentMarker = markers.find(marker => marker.targetMouseState === getMouseState());
 
