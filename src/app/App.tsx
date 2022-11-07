@@ -15,7 +15,7 @@ import FileManagement from "./core/files/FileManagement";
 import {useAtom} from "jotai";
 import {dataScenesAtom, isDevAtom, settingsAtom} from "./atoms/DataAtom";
 import {initialDataScene, initialDataSetting} from "./data/InitialData";
-import {tryParseJSON} from "./utility/Utility";
+import {getURLParameter, tryParseJSON} from "./utility/Utility";
 
 const App = () => {
     const {MarkerNavigationOpen} = useMenu();
@@ -59,7 +59,8 @@ const DataInit:FC<WithChildren> = ({children}) => {
     let firstLoad = true;
 
     const init = async () => {
-        const is_dev:boolean = process.env.REACT_APP_IS_DEV === "true";
+        const dev = getURLParameter("dev");
+        const is_dev:boolean = process.env.REACT_APP_IS_DEV === "true" || dev === "1";
         const dataPath = process.env.REACT_APP_DATA_URL;
         setIsDev(is_dev);
         if(is_dev && scene && setting){

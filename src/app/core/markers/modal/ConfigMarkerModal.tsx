@@ -1,10 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
     MDBBtn, MDBModal,
-    MDBModalBody,
     MDBModalContent,
     MDBModalDialog,
-    MDBModalFooter,
     MDBModalHeader,
     MDBModalTitle
 } from "mdb-react-ui-kit";

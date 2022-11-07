@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {ChildButton, FloatingMenu, MainButton} from "react-floating-button-menu";
-import {Close, Add, Save, CloudUpload, AddAPhoto, PinDrop, Settings} from "@material-ui/icons";
+import {Close, Add, Save, CloudUpload, AddAPhoto, Widgets, Settings} from "@material-ui/icons";
 import {useMenu} from "../../../providers/MenuProvider";
 import {DataModel} from "../../../models/DataModel";
 import {useAtom} from "jotai";
@@ -54,7 +54,7 @@ export const FloatingButton = () => {
             background={buttonBackgroundColor}
         />
         <ChildButton
-            icon={<PinDrop />}
+            icon={<Widgets />}
             size={childSize}
             onClick={() => setMarkerNavigationOpen(true)}
             background={buttonBackgroundColor}
