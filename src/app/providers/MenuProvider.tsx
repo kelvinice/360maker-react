@@ -21,6 +21,8 @@ type PageContextProps = {
     setVideoToView: Dispatch<SetStateAction<string|null>>
     imageToView: string|null
     setImageToView: Dispatch<SetStateAction<string|null>>
+    modalShortcut: boolean
+    setModalShortcut: Dispatch<SetStateAction<boolean>>
 }
 
 const initialMenu:PageContextProps = {
@@ -41,7 +43,9 @@ const initialMenu:PageContextProps = {
     videoToView: null,
     setVideoToView: () => {},
     imageToView: null,
-    setImageToView: () => {}
+    setImageToView: () => {},
+    modalShortcut: false,
+    setModalShortcut: () => {},
 }
 
 const MenuContext = createContext<PageContextProps>(initialMenu)
@@ -56,6 +60,7 @@ const MenuProvider: FC<WithChildren> = ({children}) => {
     const [modalImport, setModalImport] = useState<boolean>(initialMenu.modalImport)
     const [videoToView, setVideoToView] = useState<string|null>(initialMenu.videoToView)
     const [imageToView, setImageToView] = useState<string|null>(initialMenu.imageToView)
+    const [modalShortcut, setModalShortcut] = useState<boolean>(initialMenu.modalShortcut)
 
     return (
         <MenuContext.Provider
@@ -68,7 +73,8 @@ const MenuProvider: FC<WithChildren> = ({children}) => {
                 MarkerNavigationOpen, setMarkerNavigationOpen,
                 modalImport, setModalImport,
                 videoToView, setVideoToView,
-                imageToView, setImageToView
+                imageToView, setImageToView,
+                modalShortcut, setModalShortcut
             }}
         >
             {children}

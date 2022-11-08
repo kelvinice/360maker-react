@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {ChildButton, FloatingMenu, MainButton} from "react-floating-button-menu";
-import {Close, Add, Save, CloudUpload, AddAPhoto, Widgets, Settings} from "@material-ui/icons";
+import {Close, Add, Save, CloudUpload, AddAPhoto, Widgets, Settings, Bookmarks} from "@material-ui/icons";
 import {useMenu} from "../../../providers/MenuProvider";
 import {DataModel} from "../../../models/DataModel";
 import {useAtom} from "jotai";
@@ -8,7 +8,7 @@ import {dataScenesAtom, settingsAtom} from "../../../atoms/DataAtom";
 
 export const FloatingButton = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const {setModalViewScene, setModalSetting, setMarkerNavigationOpen, setModalImport} = useMenu();
+    const {setModalViewScene, setModalSetting, setMarkerNavigationOpen, setModalImport, setModalShortcut} = useMenu();
     const [scenes,] = useAtom(dataScenesAtom);
     const [setting,] = useAtom(settingsAtom);
 
@@ -54,6 +54,12 @@ export const FloatingButton = () => {
             background={buttonBackgroundColor}
         />
         <ChildButton
+            icon={<Bookmarks />}
+            size={childSize}
+            onClick={() => setModalShortcut(true)}
+            background={buttonBackgroundColor}
+        />
+        <ChildButton
             icon={<Widgets />}
             size={childSize}
             onClick={() => setMarkerNavigationOpen(true)}
@@ -77,6 +83,7 @@ export const FloatingButton = () => {
             onClick={() => exportData()}
             background={buttonBackgroundColor}
         />
+
     </FloatingMenu>
   )
 }
