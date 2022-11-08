@@ -1,17 +1,11 @@
 import React, {FC} from 'react';
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../../../atoms/DataAtom";
 import { useMenu } from '../../../../../providers/MenuProvider';
 import Select from 'react-select';
-import {ConfigMarkerProps} from "../PlaceMarkerConfig";
+import {ConfigMarkerModalChildProps} from "../../parent/MarkerConfigParent";
 
-type ConfigMarkerFormProps = {
-    register: UseFormRegister<ConfigMarkerProps>,
-    setValue: UseFormSetValue<ConfigMarkerProps>,
-}
-
-const PlaceConfigMarkerForm: FC<ConfigMarkerFormProps> = ({register, setValue}) => {
+const PlaceConfigMarkerForm: FC<ConfigMarkerModalChildProps> = ({props}) => {
     const [scenes] = useAtom(dataScenesAtom);
     const {markerToConfig} = useMenu();
 
@@ -26,13 +20,13 @@ const PlaceConfigMarkerForm: FC<ConfigMarkerFormProps> = ({register, setValue}) 
                         label: scenes?.find((scene) => scene.id === markerToConfig?.targetSceneId)?.name
                     }}
                     onChange={(e) => {
-                        setValue("targetSceneId", e?.value as string);
+                        props.setValue("targetSceneId", e?.value as string);
                     }}
                     />
             </div>
             <div className="form-group mb-3">
                 <label htmlFor="targetSceneId" className="fw-bold">Tooltip</label>
-                <input type="text" className="form-control" id="tooltip" {...register("tooltip")} />
+                <input type="text" className="form-control" id="tooltip" {...props.register("tooltip")} />
             </div>
         </form>
     );

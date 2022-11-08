@@ -29,7 +29,6 @@ const MouseStateButton = (props: { targetMouseState: MouseState, color : string,
 const MarkerNavigation = () => {
     const {setMarkerNavigationOpen} = useMenu();
     const nodeRef = React.useRef(null);
-    const [mouseState, setMouseState] = useAtom(mouseStateAtom);
 
     const markers = [
         {
@@ -93,16 +92,6 @@ const MarkerNavigation = () => {
                                     </MDBDropdownItem>
                                 ))
                             }
-
-                            {/*<MDBDropdownItem link>*/}
-                            {/*    <MouseStateButton color="primary" targetMouseState={MouseState.MarkerImage} children={<Image />}/>*/}
-                            {/*</MDBDropdownItem>*/}
-                            {/*<MDBDropdownItem link>*/}
-                            {/*    <MouseStateButton color="primary" targetMouseState={MouseState.MarkerVideo} children={<Videocam />}/>*/}
-                            {/*</MDBDropdownItem>*/}
-                            {/*<MDBDropdownItem link>*/}
-                            {/*    <MouseStateButton color="primary" targetMouseState={MouseState.MarkerDescription} children={<Chat />}/>*/}
-                            {/*</MDBDropdownItem>*/}
                         </MDBDropdownMenu>
                     </MDBDropdown>
 

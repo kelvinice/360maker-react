@@ -11,17 +11,17 @@ import {
 } from "mdb-react-ui-kit";
 import SettingModalForm from "../form/SettingModalForm";
 import {useForm} from "react-hook-form";
-import {SettingProps} from "../../../models/SettingModel";
+import {PlaceSettingProps} from "../../../models/SettingModel";
 import {useAtom} from "jotai";
 import {settingsAtom} from "../../../atoms/DataAtom";
 import toast from "react-hot-toast";
 
 const SettingModal = () => {
     const {setModalSetting, modalSetting} = useMenu();
-    const {register, handleSubmit, setValue} = useForm<SettingProps>();
+    const {register, handleSubmit, setValue} = useForm<PlaceSettingProps>();
     const [, setSetting] = useAtom(settingsAtom);
 
-    const submit = (data: SettingProps) => {
+    const submit = (data: PlaceSettingProps) => {
         setSetting(data);
         toast.success("Setting saved");
         setModalSetting(false);

@@ -1,3 +1,3 @@
-export type SettingProps = {
+export type PlaceSettingProps = {
     initialScene: string;
 }

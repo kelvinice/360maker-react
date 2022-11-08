@@ -73,6 +73,7 @@ const PhotoSphereViewer = () => {
         return await currentScene.markers.find(marker => marker.id === markerId);
     }, []));
 
+
     useEffect(()=>{
         if(!ref || !ref.current || Global.viewer)
             return;
@@ -89,14 +90,7 @@ const PhotoSphereViewer = () => {
                 }]
             ],
             mousemove: true,
-            //fullscreen mode
-
-
         })
-
-
-
-
 
         const markersPlugin = Global.viewer.getPlugin(MarkersPlugin);
         // @ts-ignore
@@ -240,8 +234,7 @@ const PhotoSphereViewer = () => {
     )
 };
 
-
-function initMarkerOnScene(scene: Scene) {
+const initMarkerOnScene = (scene: Scene) => {
     const markersPlugin = Global.viewer.getPlugin(MarkersPlugin);
     if(!markersPlugin)
         return;
