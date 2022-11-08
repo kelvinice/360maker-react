@@ -1,23 +1,17 @@
 import React, {FC} from 'react';
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import {ConfigMarkerProps} from "../ImageMarkerConfig";
+import {ConfigMarkerModalChildProps} from "../../parent/MarkerConfigParent";
 
-type ConfigMarkerFormProps = {
-    register: UseFormRegister<ConfigMarkerProps>,
-    setValue: UseFormSetValue<ConfigMarkerProps>,
-}
-
-const ImageConfigMarkerForm: FC<ConfigMarkerFormProps> = ({register, setValue}) => {
+const ImageConfigMarkerForm: FC<ConfigMarkerModalChildProps> = ({props}) => {
 
     return (
         <form>
             <div className="form-group mb-3">
                 <label htmlFor="targetSceneId" className="fw-bold">Media Path</label>
-                <input type="text" className="form-control" id="mediaPath" {...register("mediaPath")} />
+                <input type="text" className="form-control" id="mediaPath" {...props.register("mediaPath")} />
             </div>
             <div className="form-group mb-3">
                 <label htmlFor="targetSceneId" className="fw-bold">Tooltip</label>
-                <input type="text" className="form-control" id="tooltip" {...register("tooltip")} />
+                <input type="text" className="form-control" id="tooltip" {...props.register("tooltip")} />
             </div>
         </form>
     );

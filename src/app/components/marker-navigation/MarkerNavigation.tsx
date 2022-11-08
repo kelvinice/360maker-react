@@ -20,15 +20,14 @@ const MouseStateButton = (props: { targetMouseState: MouseState, color : string,
                 {props.children}
                 {props.text && <span className="ms-2 fw-bold">{props.text}</span>}
             </div>
-
         </div>
     )
-
 }
 
 const MarkerNavigation = () => {
     const {setMarkerNavigationOpen} = useMenu();
     const nodeRef = React.useRef(null);
+    const [mouseState] = useAtom(mouseStateAtom);
 
     const markers = [
         {
@@ -55,7 +54,7 @@ const MarkerNavigation = () => {
 
     const getMouseState = useAtomCallback(useCallback((get) => {
         return get(mouseStateAtom);
-    }, []));
+    }, [mouseState]));
 
     const currentMarker = markers.find(marker => marker.targetMouseState === getMouseState());
 

@@ -38,7 +38,7 @@ export const FloatingButton = () => {
     isOpen={isOpen}
     // @ts-ignore
     direction={"down"}
-    className={"text-white"}
+    className={"text-white ripple ripple-surface ripple-surface-light p-2"}
   >
     <MainButton
         iconResting={<Add htmlColor={"white"} />}

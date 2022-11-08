@@ -1,6 +1,6 @@
 export const MarkerType = {
-    place: "place",
-    video: "video",
-    image: "image",
-    description: "description"
+    PLACE: "place",
+    VIDEO: "video",
+    IMAGE: "image",
+    DESCRIPTION: "description"
 }

@@ -99,7 +99,7 @@ const PhotoSphereViewer = () => {
             if(mouseState === MouseState.Cursor){
                 getMarker(marker.id).then(marker => {
                     if(!marker) return;
-                    if(marker.type === MarkerType.place){
+                    if(marker.type === MarkerType.PLACE){
                         getCurrentScene(
                             marker.targetSceneId as string
                         ).then(scene => {
@@ -109,11 +109,11 @@ const PhotoSphereViewer = () => {
                             }
                             changeScene(scene);
                         });
-                    }else if(marker.type === MarkerType.video){
+                    }else if(marker.type === MarkerType.VIDEO){
                         setVideoToView(marker.mediaPath as string);
-                    }else if (marker.type === MarkerType.image){
+                    }else if (marker.type === MarkerType.IMAGE){
                         setImageToView(marker.mediaPath as string);
-                    }else if (marker.type === MarkerType.description){
+                    }else if (marker.type === MarkerType.DESCRIPTION){
                         Swal.fire({
                             title: marker.tooltip ? marker.tooltip : "Information",
                             text: marker.description as string,
@@ -150,16 +150,16 @@ const PhotoSphereViewer = () => {
 
                 switch (mouseState) {
                     case MouseState.MarkerPlace:
-                        type = MarkerType.place;
+                        type = MarkerType.PLACE;
                         break;
                     case MouseState.MarkerVideo:
-                        type = MarkerType.video;
+                        type = MarkerType.VIDEO;
                         break;
                     case MouseState.MarkerImage:
-                        type = MarkerType.image;
+                        type = MarkerType.IMAGE;
                         break;
                     case MouseState.MarkerDescription:
-                        type = MarkerType.description;
+                        type = MarkerType.DESCRIPTION;
                         break;
                 }
 

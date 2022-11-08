@@ -25,7 +25,7 @@ const App = () => {
         <div className="App">
             <PhotoSphereViewer />
             {isDev &&
-                <div className="ui-menu top-0 end-0 m-2">
+                <div className="ui-menu top-0 end-0">
                     <FloatingButton />
                 </div>
             }

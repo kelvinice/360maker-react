@@ -44,7 +44,6 @@ const MarkerConfigParent = () => {
 
         if (marker) {
             updateMarkerOnCurrentScene(data, scenes, setScene);
-            toast.success("Marker Config saved");
             const markersPlugin = Global.viewer.getPlugin(MarkersPlugin);
             if(markersPlugin && data.id) {
                 const contextMarker = markersPlugin.getMarker(data.id);
@@ -56,32 +55,33 @@ const MarkerConfigParent = () => {
                     markersPlugin.updateMarker(properties);
                 }
             }
-
+            toast.success("Marker Config saved");
             setMarkerToConfig(null);
         }else{
             toast.error("Marker Config failed");
         }
     }
 
+    const props = {register, submit, handleSubmit, setValue};
+
+    const renderMarkerConfig = () => {
+        switch (markerToConfig?.type) {
+            case MarkerType.PLACE:
+                return <PlaceMarkerConfig props={props} />
+            case MarkerType.VIDEO:
+                return <VideoMarkerConfig props={props} />
+            case MarkerType.IMAGE:
+                return <ImageMarkerConfig props={props} />
+            case MarkerType.DESCRIPTION:
+                return <DescriptionMarkerConfig props={props} />
+            default:
+                return <></>
+        }
+    }
+
     return (
         <>
-            {
-                markerToConfig &&
-                <>
-                    {
-                        markerToConfig.type === MarkerType.place && <PlaceMarkerConfig props={{register, submit, handleSubmit, setValue}} />
-                    }
-                    {
-                        markerToConfig.type === MarkerType.video && <VideoMarkerConfig props={{register, submit, handleSubmit, setValue}} />
-                    }
-                    {
-                        markerToConfig.type === MarkerType.image && <ImageMarkerConfig />
-                    }
-                    {
-                        markerToConfig.type === MarkerType.description && <DescriptionMarkerConfig />
-                    }
-                </>
-            }
+            {renderMarkerConfig()}
         </>
     );
 };
