@@ -28,3 +28,9 @@ export interface Marker {
 export interface SettingModel {
     initialScene: string
 }
+
+export interface Shortcut {
+    id?: string
+    name: string
+    sceneId?: string
+}

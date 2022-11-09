@@ -16,6 +16,7 @@ import {useAtom} from "jotai";
 import {dataScenesAtom, isDevAtom, settingsAtom} from "./atoms/DataAtom";
 import {initialDataScene, initialDataSetting} from "./data/InitialData";
 import {getURLParameter, tryParseJSON} from "./utility/Utility";
+import ShortcutWrapper from "./components/shortcut/ShortcutWrapper";
 
 const App = () => {
     const {MarkerNavigationOpen} = useMenu();
@@ -33,6 +34,10 @@ const App = () => {
             <div className="ui-menu start-0 top-50">
                 <VRButton />
             </div>
+            <div className="ui-menu start-0 bottom-0 d-flex justify-content-center mb-5 w-100 " >
+                <ShortcutWrapper />
+            </div>
+
             {MarkerNavigationOpen && isDev && <MarkerNavigation />}
             <ModalWrapper />
         </div>

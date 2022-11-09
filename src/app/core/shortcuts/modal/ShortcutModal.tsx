@@ -1,9 +1,17 @@
 import React from 'react';
-import {MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalHeader, MDBModalTitle} from "mdb-react-ui-kit";
+import {
+    MDBBtn,
+    MDBModal,
+    MDBModalBody,
+    MDBModalContent,
+    MDBModalDialog,
+    MDBModalHeader,
+    MDBModalTitle
+} from "mdb-react-ui-kit";
 import {useMenu} from "../../../providers/MenuProvider";
 
 const ShortcutModal = () => {
-    const {modalShortcut} = useMenu();
+    const {modalShortcut, setModalShortcut} = useMenu();
 
     return (
         <>
@@ -12,6 +20,7 @@ const ShortcutModal = () => {
                     <MDBModalContent>
                         <MDBModalHeader>
                             <MDBModalTitle>Shortcut</MDBModalTitle>
+                            <MDBBtn className='btn-close' color='none' onClick={()=>setModalShortcut(false)}></MDBBtn>
                         </MDBModalHeader>
                         <MDBModalBody>
                             Shortcut

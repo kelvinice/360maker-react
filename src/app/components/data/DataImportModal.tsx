@@ -59,7 +59,7 @@ const DataImportModal = () => {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>setModalImport(false)}>Close</button>
+                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={()=>setModalImport(false)}>Close</button>
                             <button type="button" className="btn btn-primary" onClick={handleSubmit(submit)}>Save changes</button>
                         </div>
                     </div>

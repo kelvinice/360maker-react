@@ -10,10 +10,12 @@ import {MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBDropdown} from "
 import {useAtomCallback} from "jotai/utils";
 
 
-const MouseStateButton = (props: { targetMouseState: MouseState, color : string, children: ReactNode, text?: string, className?: string }) => {
+const MouseStateButton = (props: { targetMouseState: MouseState, color : string, children: ReactNode, text?: string, className?: string, tooltip?: string }) => {
     const [mouseState, setMouseState] = useAtom(mouseStateAtom);
     return (
-        <div className={clsx({
+        <div
+            data-toggle="tooltip" title={props.tooltip}
+            className={clsx({
             "active": props.targetMouseState === mouseState,
         }, `btn btn-sm btn-${props.color} d-flex align-item-center ${props.className || ""}`)} onClick={()=>setMouseState(props.targetMouseState)}>
             <div className="d-flex align-items-center ">
@@ -59,22 +61,22 @@ const MarkerNavigation = () => {
     const currentMarker = markers.find(marker => marker.targetMouseState === getMouseState());
 
     return (
-        <Draggable handle=".btn-drag" nodeRef={nodeRef}>
-            <div className="bg-white rounded-3 shadow-2xl p-2" ref={nodeRef}
-                 style={{zIndex: "99999", top: 0, left: 0, position: "absolute"}}>
+        <Draggable handle=".btn-drag" nodeRef={nodeRef} >
+            <div className="bg-white rounded-3 p-2 shadow-5-strong" ref={nodeRef}
+                 style={{zIndex: "1000", top: 0, left: 0, position: "absolute"}}>
                 <div className="d-flex gap-2">
-                    <button className="btn bg-light btn-sm btn-drag">
+                    <button className="btn bg-light btn-sm btn-drag" data-toggle="tooltip" title="Drag Navigation">
                         <OpenWith/>
                     </button>
 
                     <div className="border border-dark border-1 h-auto"/>
 
-                    <MouseStateButton color="info" targetMouseState={MouseState.Cursor} children={<Mouse/>}/>
-                    <MouseStateButton color="info" targetMouseState={MouseState.Setting} children={<Settings/>}/>
-                    <MouseStateButton color="info" targetMouseState={MouseState.Delete} children={<Delete/>}/>
+                    <MouseStateButton color="info" tooltip="Select Cursor" targetMouseState={MouseState.Cursor} children={<Mouse/>}/>
+                    <MouseStateButton color="info" tooltip="Setting Cursor" targetMouseState={MouseState.Setting} children={<Settings/>}/>
+                    <MouseStateButton color="info" tooltip="Delete Cursor" targetMouseState={MouseState.Delete} children={<Delete/>}/>
 
-                    <MDBDropdown group>
-                        <MDBDropdownToggle className={clsx({
+                    <MDBDropdown group data-toggle="tooltip" title="Marker cursor">
+                        <MDBDropdownToggle  className={clsx({
                             "active": markers.find(marker => marker.targetMouseState === getMouseState()) !== undefined,
                         }, "btn btn-sm")}>
                             {
@@ -97,7 +99,7 @@ const MarkerNavigation = () => {
 
                     <div className="border border-dark border-1 h-auto"/>
 
-                    <button className="btn btn-danger btn-sm" onClick={() => setMarkerNavigationOpen(false)}>
+                    <button className="btn btn-danger btn-sm" onClick={() => setMarkerNavigationOpen(false)} data-toggle="tooltip" title="Close Navigation">
                         <Close/>
                     </button>
                 </div>
