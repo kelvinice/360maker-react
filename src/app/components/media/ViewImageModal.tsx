@@ -9,6 +9,8 @@ import {
     MDBModalTitle
 } from "mdb-react-ui-kit";
 import {useMenu} from "../../providers/MenuProvider";
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import LazyImage from "../lazy-image/LazyImage";
 
 const ViewVideoModal = () => {
     const {imageToView, setImageToView}= useMenu();
@@ -25,7 +27,7 @@ const ViewVideoModal = () => {
                                 <MDBBtn className='btn-close' color='none' onClick={()=>setImageToView(null)}></MDBBtn>
                             </MDBModalHeader>
                             <MDBModalBody>
-                                <img src={imageToView} alt="image" width="100%" height="100%"/>
+                                <LazyImage src={imageToView} alt={imageToView} width={"100%"} height={"500px"} />
                             </MDBModalBody>
                         </MDBModalContent>
                     </MDBModalDialog>
