@@ -76,7 +76,7 @@ const MarkerNavigation = () => {
                     <MouseStateButton color="info" tooltip="Delete Cursor" targetMouseState={MouseState.Delete} children={<Delete/>}/>
 
                     <MDBDropdown group data-toggle="tooltip" title="Marker cursor">
-                        <MDBDropdownToggle  className={clsx({
+                        <MDBDropdownToggle className={clsx({
                             "active": markers.find(marker => marker.targetMouseState === getMouseState()) !== undefined,
                         }, "btn btn-sm")}>
                             {

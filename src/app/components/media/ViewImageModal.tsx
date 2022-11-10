@@ -9,7 +9,6 @@ import {
     MDBModalTitle
 } from "mdb-react-ui-kit";
 import {useMenu} from "../../providers/MenuProvider";
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import LazyImage from "../lazy-image/LazyImage";
 
 const ViewVideoModal = () => {

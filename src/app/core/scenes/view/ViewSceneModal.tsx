@@ -12,7 +12,7 @@ import {
 import ViewSceneTable from "./table/ViewSceneTable";
 
 const ViewSceneModal = () => {
-    const {setModalViewScene, modalViewScene, setModalAddScene, modalAddScene} = useMenu();
+    const {setModalViewScene, modalViewScene, setSceneToManage, sceneToManage} = useMenu();
 
     const toggleShow = () => {
         setModalViewScene(!modalViewScene);
@@ -20,7 +20,7 @@ const ViewSceneModal = () => {
 
     return (
         <>
-            <MDBModal staticBackdrop show={modalViewScene && !modalAddScene} tabIndex='-1'>
+            <MDBModal staticBackdrop show={modalViewScene && !sceneToManage} tabIndex='-1'>
                 <MDBModalDialog size={"xl"} scrollable={true}>
                     <MDBModalContent>
                         <MDBModalHeader>
@@ -31,7 +31,7 @@ const ViewSceneModal = () => {
                             <ViewSceneTable />
                         </MDBModalBody>
                         <MDBModalFooter>
-                            <MDBBtn color='secondary' onClick={()=>setModalAddScene(true)}>Add Scene</MDBBtn>
+                            <MDBBtn color='secondary' onClick={()=>setSceneToManage("")}>Add Scene</MDBBtn>
                         </MDBModalFooter>
                     </MDBModalContent>
                 </MDBModalDialog>

@@ -33,4 +33,5 @@ export interface Shortcut {
     id?: string
     name: string
     sceneId?: string
+    children?: Shortcut[]
 }

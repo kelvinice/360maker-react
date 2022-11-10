@@ -5,10 +5,12 @@ import {SweetAlert} from "../../../../constants/SweetAlert";
 import toast from "react-hot-toast";
 import {Scene} from "../../../../models/DataModel";
 import {changeScene} from "../../../PhotoSphereViewer";
+import {useMenu} from "../../../../providers/MenuProvider";
 
 const ViewSceneTable = () => {
     const [scene, setScene] = useAtom(dataScenesAtom);
     const [search, setSearch] = useState<string>("");
+    const {setSceneToManage} = useMenu();
 
     const deleteScene = (id: string) => {
         SweetAlert.fire({
@@ -35,13 +37,10 @@ const ViewSceneTable = () => {
 
     return (
         <div>
-            {/*Table of scene*/}
             <div>
-                {/*input search*/}
                 <div className="input-group mb-3">
                     <input type="text" className="form-control" placeholder="Search scene" aria-label="Search scene" value={search} onChange={(e) => setSearch(e.target.value)}/>
                 </div>
-
             </div>
 
             <table className="table table-striped table-responsive">
@@ -67,11 +66,10 @@ const ViewSceneTable = () => {
                                     <button className="btn btn-danger" onClick={() => deleteScene(scene.id as string)}>
                                         <i className="fa fa-trash"/>
                                     </button>
-                                    <button className="btn btn-primary ms-2">
+                                    <button className="btn btn-primary ms-2" onClick={()=>setSceneToManage(scene.id as string)}>
                                         <i className="fa fa-edit"/>
                                     </button>
-                                    <button className="btn btn-success ms-2"
-                                        onClick={() => handleView(scene)}>
+                                    <button className="btn btn-success ms-2" onClick={() => handleView(scene)}>
                                         <i className="fa fa-eye"/>
                                     </button>
                                 </div>

@@ -3,8 +3,8 @@ import {WithChildren} from "../types/WithChildren";
 import {Marker} from "../models/DataModel";
 
 type PageContextProps = {
-    modalAddScene: boolean
-    setModalAddScene: Dispatch<SetStateAction<boolean>>
+    sceneToManage: string|null,
+    setSceneToManage: Dispatch<SetStateAction<string|null>>
     modalViewScene: boolean
     setModalViewScene: Dispatch<SetStateAction<boolean>>
     markerToConfig: Marker|null;
@@ -26,8 +26,8 @@ type PageContextProps = {
 }
 
 const initialMenu:PageContextProps = {
-    modalAddScene: false,
-    setModalAddScene: () => {},
+    sceneToManage: null,
+    setSceneToManage: () => {},
     modalViewScene: false,
     setModalViewScene: () => {},
     markerToConfig: null,
@@ -51,7 +51,7 @@ const initialMenu:PageContextProps = {
 const MenuContext = createContext<PageContextProps>(initialMenu)
 
 const MenuProvider: FC<WithChildren> = ({children}) => {
-    const [modalAddScene, setModalAddScene] = useState<boolean>(initialMenu.modalAddScene)
+    const [sceneToManage, setSceneToManage] = useState<string|null>(null)
     const [modalViewScene, setModalViewScene] = useState<boolean>(initialMenu.modalViewScene)
     const [modalSetting, setModalSetting] = useState<boolean>(initialMenu.modalSetting)
     const [markerToConfig, setMarkerToConfig] = useState<Marker|null>(initialMenu.markerToConfig)
@@ -65,7 +65,7 @@ const MenuProvider: FC<WithChildren> = ({children}) => {
     return (
         <MenuContext.Provider
             value={{
-                modalAddScene, setModalAddScene,
+                sceneToManage, setSceneToManage,
                 modalViewScene, setModalViewScene,
                 markerToConfig, setMarkerToConfig,
                 modalSetting, setModalSetting,

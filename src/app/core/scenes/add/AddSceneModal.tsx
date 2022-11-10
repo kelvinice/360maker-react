@@ -11,19 +11,15 @@ import {useMenu} from "../../../providers/MenuProvider";
 import AddSceneModalForm from "./form/AddSceneModalForm";
 
 const AddSceneModal = () => {
-    const {setModalAddScene, modalAddScene} = useMenu();
-
-    const toggleShow = () => {
-        setModalAddScene(!modalAddScene);
-    }
+    const {setSceneToManage, sceneToManage} = useMenu();
 
     return (
-        <MDBModal staticBackdrop show={modalAddScene} setShow={setModalAddScene} tabIndex='-1'>
+        <MDBModal staticBackdrop show={sceneToManage !== null} tabIndex='-1'>
             <MDBModalDialog>
                 <MDBModalContent>
                     <MDBModalHeader>
-                        <MDBModalTitle>Add Scene</MDBModalTitle>
-                        <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+                        <MDBModalTitle>Manage Scene</MDBModalTitle>
+                        <MDBBtn className='btn-close' color='none' onClick={()=>{setSceneToManage(null)}}></MDBBtn>
                     </MDBModalHeader>
                     <AddSceneModalForm />
                 </MDBModalContent>

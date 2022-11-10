@@ -30,7 +30,6 @@ const LazyImage: FC<LazyImageProps> = (props) => {
                 style={{display: loaded ? "block" : "none"}}
                 loading={"eager"}
                 height={props.height}
-
                 className={clsx({
                     "d-none": !loaded,
                 }, "img-fluid rounded-3 shadow-sm", props.className)}

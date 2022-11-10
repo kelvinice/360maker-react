@@ -34,7 +34,7 @@ const App = () => {
             <div className="ui-menu start-0 top-50">
                 <VRButton />
             </div>
-            <div className="ui-menu start-0 bottom-0 d-flex justify-content-center mb-5 w-100 " >
+            <div className="ui-menu start-0 bottom-0 d-flex mb-5 w-100 " >
                 <ShortcutWrapper />
             </div>
 
