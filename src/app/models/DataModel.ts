@@ -29,9 +29,14 @@ export interface SettingModel {
     initialScene: string
 }
 
+export interface ShortcutSceneMetadata {
+    name: string
+    sceneId: string
+}
+
 export interface Shortcut {
     id?: string
     name: string
     sceneId?: string
-    children?: Shortcut[]
+    children?: ShortcutSceneMetadata[]
 }

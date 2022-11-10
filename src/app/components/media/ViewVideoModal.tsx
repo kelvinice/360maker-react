@@ -25,7 +25,7 @@ const ViewVideoModal = () => {
                                 <MDBBtn className='btn-close' color='none' onClick={()=>setVideoToView(null)}></MDBBtn>
                             </MDBModalHeader>
                             <MDBModalBody>
-                                <video width="100%" height="100%" controls>
+                                <video width="100%" height="100%" controls autoPlay={true} >
                                     <source src={videoToView} type="video/mp4" />
                                 </video>
                             </MDBModalBody>

@@ -21,19 +21,19 @@ const ShortcutWrapper = () => {
                 name: "King Palace",
                 children: [
                     {
-                        id: uuidv4(),
+                        sceneId: uuidv4(),
                         name: "Inside palace",
                     },
                     {
-                        id: uuidv4(),
+                        sceneId: uuidv4(),
                         name: "Middle palace",
                     },
                     {
-                        id: uuidv4(),
-                        name: "lorem ipsum dolor sit amet .",
+                        sceneId: uuidv4(),
+                        name: "lorem ipsum dolor sit amet",
                     },
                     {
-                        id: uuidv4(),
+                        sceneId: uuidv4(),
                         name: "Outside palace",
                     }
                 ]

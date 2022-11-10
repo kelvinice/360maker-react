@@ -8,9 +8,11 @@ import {changeScene} from "../../../PhotoSphereViewer";
 import {useMenu} from "../../../../providers/MenuProvider";
 
 const ViewSceneTable = () => {
-    const [scene, setScene] = useAtom(dataScenesAtom);
+    const [scenes, setScenes] = useAtom(dataScenesAtom);
     const [search, setSearch] = useState<string>("");
     const {setSceneToManage} = useMenu();
+    const [page, setPage] = useState<number>(1);
+    const itemPerPage = 8;
 
     const deleteScene = (id: string) => {
         SweetAlert.fire({
@@ -23,9 +25,9 @@ const ViewSceneTable = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                if(!scene)
+                if(!scenes)
                     return;
-                setScene(scene.filter((scene) => scene.id !== id));
+                setScenes(scenes.filter((scene) => scene.id !== id));
                 toast.success("Scene deleted");
             }
         })
@@ -34,6 +36,32 @@ const ViewSceneTable = () => {
     const handleView = (scene: Scene) => {
         changeScene(scene);
     }
+
+    const handleSwapScenePosition = (scene: Scene, direction: "up" | "down") => {
+        if(!scenes)
+            return;
+        const index = scenes.findIndex((s) => s.id === scene.id);
+        if(direction === "up"){
+            if(index === 0)
+                return;
+            const temp = scenes[index];
+            scenes[index] = scenes[index - 1];
+            scenes[index - 1] = temp;
+        }else{
+            if(index === scenes.length - 1)
+                return;
+            const temp = scenes[index];
+            scenes[index] = scenes[index + 1];
+            scenes[index + 1] = temp;
+        }
+        setScenes([...scenes]);
+    }
+
+    const changePage = (page: number) => {
+        setPage(page);
+    }
+
+    const scenesToDisplay = (scenes || []).filter((scene) => scene.name.toLowerCase().includes(search.toLowerCase()));
 
     return (
         <div>
@@ -54,11 +82,10 @@ const ViewSceneTable = () => {
                 </thead>
                 <tbody>
                 {
-                    scene?.filter(
-                        (scene) => scene.name.toLowerCase().includes(search.toLowerCase())
-                    ).map((scene, index) => (
+
+                    scenes && scenes.filter((scene) => scene.name.toLowerCase().includes(search.toLowerCase())).slice((page - 1) * itemPerPage, page * itemPerPage).map((scene, index) => (
                         <tr key={scene.id}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">{(page - 1) * itemPerPage + index + 1}</th>
                             <td>{scene.name}</td>
                             <td>{scene.path}</td>
                             <td>
@@ -72,6 +99,12 @@ const ViewSceneTable = () => {
                                     <button className="btn btn-success ms-2" onClick={() => handleView(scene)}>
                                         <i className="fa fa-eye"/>
                                     </button>
+                                    <button className="btn btn-warning ms-2 ripple-surface ripple-surface-white" disabled={(page - 1) * itemPerPage + index === 0 || search !== ""} onClick={() => handleSwapScenePosition(scene, "up")}>
+                                        <i className="fa fa-arrow-up"/>
+                                    </button>
+                                    <button className="btn btn-warning ms-2" disabled={(page - 1) * itemPerPage + index + 1 === scenesToDisplay.length || search !== ""} onClick={() => handleSwapScenePosition(scene, "down")}>
+                                        <i className="fa fa-arrow-down"/>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -79,6 +112,25 @@ const ViewSceneTable = () => {
                 }
                 </tbody>
             </table>
+            <div className="d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul className="pagination">
+                        <li className="page-item">
+                            <button className="page-link" onClick={() => changePage(page - 1)} disabled={page === 1}>Previous</button>
+                        </li>
+                        {
+                            scenes && Array.from(Array(Math.ceil(scenesToDisplay.length / itemPerPage)).keys()).map((index) => (
+                                <li className="page-item" key={index}>
+                                    <button className="page-link" onClick={() => changePage(index + 1)}>{index + 1}</button>
+                                </li>
+                            ))
+                        }
+                        <li className="page-item">
+                            <button className="page-link" onClick={() => changePage(page + 1)} disabled={page - 1 === Math.ceil(scenesToDisplay.length / itemPerPage)}>Next</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     );
 };

@@ -20,7 +20,7 @@ const ViewSceneModal = () => {
 
     return (
         <>
-            <MDBModal staticBackdrop show={modalViewScene && !sceneToManage} tabIndex='-1'>
+            <MDBModal staticBackdrop show={modalViewScene && sceneToManage === null} tabIndex='-1'>
                 <MDBModalDialog size={"xl"} scrollable={true}>
                     <MDBModalContent>
                         <MDBModalHeader>

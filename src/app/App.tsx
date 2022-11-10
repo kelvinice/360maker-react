@@ -13,8 +13,8 @@ import VRButton from "./components/vr/VRButton";
 import {WithChildren} from "./types/WithChildren";
 import FileManagement from "./core/files/FileManagement";
 import {useAtom} from "jotai";
-import {dataScenesAtom, isDevAtom, settingsAtom} from "./atoms/DataAtom";
-import {initialDataScene, initialDataSetting} from "./data/InitialData";
+import {dataScenesAtom, isDevAtom, settingsAtom, shortcutsAtom} from "./atoms/DataAtom";
+import {initialDataScene, initialDataSetting, initialDataShortcut} from "./data/InitialData";
 import {getURLParameter, tryParseJSON} from "./utility/Utility";
 import ShortcutWrapper from "./components/shortcut/ShortcutWrapper";
 
@@ -60,6 +60,7 @@ const DataInit:FC<WithChildren> = ({children}) => {
     const [ready, setReady] = useState(false);
     const [scene, setScene] = useAtom(dataScenesAtom);
     const [setting, setSetting] = useAtom(settingsAtom);
+    const [shortcuts, setShortcuts] = useAtom(shortcutsAtom);
     const [, setIsDev] = useAtom(isDevAtom);
     let firstLoad = true;
 
@@ -75,6 +76,7 @@ const DataInit:FC<WithChildren> = ({children}) => {
         if(!dataPath){
             setScene(initialDataScene);
             setSetting(initialDataSetting);
+            setShortcuts(initialDataShortcut);
             return;
         }
         try {
