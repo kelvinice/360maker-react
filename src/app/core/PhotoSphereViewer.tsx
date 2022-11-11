@@ -14,6 +14,7 @@ import {MouseState} from "../constants/MouseState";
 import {MarkerType} from "../constants/MarkerType";
 import MarkerIconByType from "../utility/MarkerIconByType";
 import Swal from "sweetalert2";
+import {getURLParameter} from "../utility/Utility";
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
@@ -209,7 +210,15 @@ const PhotoSphereViewer = () => {
             return;
         if(!setting || !scenes)
             return;
-        const currentScene = scenes.find(scene => scene.id === setting.initialScene);
+
+        const paramScene = getURLParameter("scene");
+        let currentScene: Scene|undefined;
+        if(paramScene && paramScene !== 'undefined'){
+            currentScene = scenes.find(scene => scene.id === paramScene);
+        }
+        if(!currentScene){
+            currentScene = scenes.find(scene => scene.id === setting.initialScene);
+        }
         if(currentScene){
             changeScene(currentScene);
         }

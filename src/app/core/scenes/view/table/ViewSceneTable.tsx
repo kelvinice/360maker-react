@@ -7,13 +7,14 @@ import {Scene} from "../../../../models/DataModel";
 import {changeScene} from "../../../PhotoSphereViewer";
 import {useMenu} from "../../../../providers/MenuProvider";
 import clsx from "clsx";
+import {digitCount, leadingZeros} from "../../../../utility/Utility";
 
 const ViewSceneTable = () => {
     const [scenes, setScenes] = useAtom(dataScenesAtom);
     const [search, setSearch] = useState<string>("");
     const {setSceneToManage} = useMenu();
     const [page, setPage] = useState<number>(1);
-    const itemPerPage = 8;
+    const itemPerPage = 7;
 
     const deleteScene = (id: string) => {
         SweetAlert.fire({
@@ -62,6 +63,11 @@ const ViewSceneTable = () => {
         setPage(page);
     }
 
+    const copyLink = (scene: Scene) => {
+        navigator.clipboard.writeText(window.location.origin + "/?scene=" + scene.id);
+        toast.success("Link copied");
+    }
+
     const scenesToDisplay = (scenes || []).filter((scene) => scene.name.toLowerCase().includes(search.toLowerCase()));
 
     return (
@@ -76,8 +82,8 @@ const ViewSceneTable = () => {
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Path</th>
+                    <th scope="col" className={"w-100"}>Name</th>
+                    <th scope="col" className={"w-100"}>Path</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -86,24 +92,27 @@ const ViewSceneTable = () => {
 
                     scenes && scenes.filter((scene) => scene.name.toLowerCase().includes(search.toLowerCase())).slice((page - 1) * itemPerPage, page * itemPerPage).map((scene, index) => (
                         <tr key={scene.id}>
-                            <th scope="row">{(page - 1) * itemPerPage + index + 1}</th>
+                            <th scope="row">{leadingZeros((page - 1) * itemPerPage + index + 1, digitCount(scenesToDisplay.length))}</th>
                             <td>{scene.name}</td>
                             <td>{scene.path}</td>
                             <td>
                                 <div className="d-flex flex-row">
-                                    <button className="btn btn-danger" onClick={() => deleteScene(scene.id as string)}>
+                                    <button className="btn btn-danger fs-6" onClick={() => deleteScene(scene.id as string)}>
                                         <i className="fa fa-trash"/>
                                     </button>
-                                    <button className="btn btn-primary ms-2" onClick={()=>setSceneToManage(scene.id as string)}>
+                                    <button className="btn btn-primary ms-2 fs-6" onClick={()=>setSceneToManage(scene.id as string)}>
                                         <i className="fa fa-edit"/>
                                     </button>
-                                    <button className="btn btn-success ms-2" onClick={() => handleView(scene)}>
+                                    <button className="btn btn-success ms-2 fs-6" onClick={() => handleView(scene)}>
                                         <i className="fa fa-eye"/>
                                     </button>
-                                    <button className="btn btn-warning ms-2 ripple-surface ripple-surface-white" disabled={(page - 1) * itemPerPage + index === 0 || search !== ""} onClick={() => handleSwapScenePosition(scene, "up")}>
+                                    <button className="btn btn-info ms-2 fs-6" onClick={() => copyLink(scene)}>
+                                        <i className="fa fa-link"/>
+                                    </button>
+                                    <button className="btn btn-warning ms-2 fs-6" disabled={(page - 1) * itemPerPage + index === 0 || search !== ""} onClick={() => handleSwapScenePosition(scene, "up")}>
                                         <i className="fa fa-arrow-up"/>
                                     </button>
-                                    <button className="btn btn-warning ms-2" disabled={(page - 1) * itemPerPage + index + 1 === scenesToDisplay.length || search !== ""} onClick={() => handleSwapScenePosition(scene, "down")}>
+                                    <button className="btn btn-warning ms-2 fs-6" disabled={(page - 1) * itemPerPage + index + 1 === scenesToDisplay.length || search !== ""} onClick={() => handleSwapScenePosition(scene, "down")}>
                                         <i className="fa fa-arrow-down"/>
                                     </button>
                                 </div>

@@ -1,6 +1,7 @@
 export interface DataModel {
     scenes: Scene[];
     setting: SettingModel;
+    shortcuts: Shortcut[];
 }
 
 export interface Scene{

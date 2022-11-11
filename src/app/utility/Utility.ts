@@ -9,7 +9,7 @@ export const tryParseJSON = (str: string) => {
 }
 
 export const getURLParameter = (name: string) => {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(window.location.search) || [""])[1]+"".replace(/\+/g, '%20')) || null;
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=([^&;]+?)(&|#|;|$)').exec(window.location.search) || [""])[1]+"".replace(/\+/g, '%20')) || null;
 }
 
 export const generateUUID = () => {
@@ -18,4 +18,12 @@ export const generateUUID = () => {
 
 export const isNullUndefinedOrEmpty = (str: any) => {
     return str === undefined || str == null || str === "";
+}
+
+export const digitCount = (num: number) => {
+    return num.toString().length;
+}
+
+export const leadingZeros = (num: number, digits: number) => {
+    return num.toString().padStart(digits, "0");
 }

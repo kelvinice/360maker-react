@@ -5,12 +5,13 @@ import Swal from "sweetalert2";
 import clsx from "clsx";
 import {Shortcut} from "../../../../models/DataModel";
 import {useMenu} from "../../../../providers/MenuProvider";
+import {MDBBtn} from "mdb-react-ui-kit";
 
 const ViewShortcutTable = () => {
     const [shortcuts, setShortcuts] = useAtom(shortcutsAtom);
     const [scenes, ] = useAtom(dataScenesAtom);
     const [page, setPage] = useState<number>(1);
-    const itemPerPage = 8;
+    const itemPerPage = 7;
     const maxPage = Math.ceil((shortcuts || []).length / itemPerPage);
     const {setShortcutIdToManage} = useMenu();
 
@@ -66,8 +67,8 @@ const ViewShortcutTable = () => {
             <table className="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Scene</th>
+                    <th scope="col" className={"w-100"}>Name</th>
+                    <th scope="col" className={"w-100"}>Scene</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -84,20 +85,20 @@ const ViewShortcutTable = () => {
                             }</td>
                             <td>
                                 <div className={"d-flex gap-2"}>
-                                    <button className="btn btn-danger" onClick={() => deleteShortcut(shortcut.id as string)}>
+                                    <MDBBtn className="btn btn-danger fs-6" onClick={() => deleteShortcut(shortcut.id as string)}>
                                         <i className="fas fa-trash"/>
-                                    </button>
-                                    <button className="btn btn-primary" onClick={() => setShortcutIdToManage(shortcut.id as string)}>
+                                    </MDBBtn>
+                                    <MDBBtn className="btn btn-primary fs-6" onClick={() => setShortcutIdToManage(shortcut.id as string)}>
                                         <i className="fas fa-edit"/>
-                                    </button>
-                                    <button className="btn btn-warning" onClick={() => handleSwapShortcutPosition(shortcut, "up")}
+                                    </MDBBtn>
+                                    <MDBBtn className="btn btn-warning fs-6" onClick={() => handleSwapShortcutPosition(shortcut, "up")}
                                             disabled={index === 0}>
                                         <i className="fas fa-arrow-up"/>
-                                    </button>
-                                    <button className="btn btn-warning" onClick={() => handleSwapShortcutPosition(shortcut, "down")}
+                                    </MDBBtn>
+                                    <MDBBtn className="btn btn-warning fs-6" onClick={() => handleSwapShortcutPosition(shortcut, "down")}
                                             disabled={index === shortcuts.length - 1}>
                                         <i className="fas fa-arrow-down"/>
-                                    </button>
+                                    </MDBBtn>
                                 </div>
                             </td>
                         </tr>

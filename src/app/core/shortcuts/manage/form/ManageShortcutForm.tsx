@@ -163,7 +163,6 @@ const ManageShortcutForm = () => {
                                             }
                                         }/>
                                     }</td>
-
                                     <td>{
                                         <Select className="form-control" id="sceneId"
                                             options={scenes?.map((scene) => ({value: scene.id as string, label: scene.name}))}
@@ -178,13 +177,13 @@ const ManageShortcutForm = () => {
                                     }</td>
                                     <td>
                                         <div className={"d-flex gap-1"}>
-                                            <MDBBtn color="danger" onClick={() => removeChildren(index)}>
+                                            <MDBBtn color="danger" className={"fs-6"} onClick={() => removeChildren(index)}>
                                                 <i className="fas fa-trash"/>
                                             </MDBBtn>
-                                            <MDBBtn color="warning" onClick={() => changeChildPosition(index, "up")} disabled={index === 0}>
+                                            <MDBBtn color="warning" className={"fs-6"} onClick={() => changeChildPosition(index, "up")} disabled={index === 0}>
                                                 <i className="fas fa-arrow-up"/>
                                             </MDBBtn>
-                                            <MDBBtn color="warning" onClick={() => changeChildPosition(index, "down")} disabled={index === children.length - 1}>
+                                            <MDBBtn color="warning" className={"fs-6"} onClick={() => changeChildPosition(index, "down")} disabled={index === children.length - 1}>
                                                 <i className="fas fa-arrow-down"/>
                                             </MDBBtn>
                                         </div>

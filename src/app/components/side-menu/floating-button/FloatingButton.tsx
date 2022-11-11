@@ -4,13 +4,14 @@ import {Close, Add, Save, CloudUpload, AddAPhoto, Widgets, Settings, Bookmarks} 
 import {useMenu} from "../../../providers/MenuProvider";
 import {DataModel} from "../../../models/DataModel";
 import {useAtom} from "jotai";
-import {dataScenesAtom, settingsAtom} from "../../../atoms/DataAtom";
+import {dataScenesAtom, settingsAtom, shortcutsAtom} from "../../../atoms/DataAtom";
 
 export const FloatingButton = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const {setModalViewScene, setModalSetting, setMarkerNavigationOpen, setModalImport, setModalShortcut} = useMenu();
     const [scenes,] = useAtom(dataScenesAtom);
     const [setting,] = useAtom(settingsAtom);
+    const [shortcuts,] = useAtom(shortcutsAtom);
 
     const mainSize = 56;
     const childSize = 40;
@@ -19,7 +20,8 @@ export const FloatingButton = () => {
     const exportData = async () => {
         const data: DataModel = {
             scenes: scenes,
-            setting: setting
+            setting: setting,
+            shortcuts: shortcuts,
         } as DataModel;
         const json = JSON.stringify(data);
         const blob = new Blob([json], {type: "application/json"});
