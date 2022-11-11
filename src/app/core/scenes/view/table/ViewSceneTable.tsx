@@ -95,7 +95,7 @@ const ViewSceneTable = () => {
                 <tbody>
                 {
                     scenes && scenes.filter((scene) => scene.name.toLowerCase().includes(search.toLowerCase())).slice((page - 1) * itemPerPage, page * itemPerPage).map((scene, index) => (
-                        <tr key={scene.id}>
+                        <tr className="align-middle" key={scene.id}>
                             <th scope="row">{leadingZeros((page - 1) * itemPerPage + index + 1, digitCount(scenesToDisplay.length))}</th>
                             <td>{scene.name}</td>
                             <td>{scene.path}</td>

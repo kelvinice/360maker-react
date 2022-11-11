@@ -162,6 +162,9 @@ const PhotoSphereViewer = () => {
                     case MouseState.MarkerDescription:
                         type = MarkerType.DESCRIPTION;
                         break;
+                    case MouseState.MarkerLink:
+                        type = MarkerType.LINK;
+                        break;
                 }
 
                 if(type){

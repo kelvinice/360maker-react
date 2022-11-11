@@ -76,7 +76,7 @@ const ViewShortcutTable = () => {
                 {shortcuts.slice((page - 1) * itemPerPage, page * itemPerPage).map((shortcut, index) => {
                     const scene = scenes.find((scene) => scene.id === shortcut.sceneId);
                     return (
-                        <tr key={shortcut.id}>
+                        <tr className="align-middle" key={shortcut.id}>
                             <td>{shortcut.name}</td>
                             <td>{
                                 (shortcut.children || []).length > 0 ?

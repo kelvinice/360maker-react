@@ -1,6 +1,6 @@
 import {
     DescriptionMarkerIconPath,
-    ImageMarkerIconPath,
+    ImageMarkerIconPath, LinkMarkerIconPath,
     PlaceMarkerIconPath,
     VideoMarkerIconPath
 } from "../constants/AssetPath";
@@ -15,6 +15,8 @@ export default function MarkerIconByType(type: string): string {
         return ImageMarkerIconPath;
         case "description":
         return DescriptionMarkerIconPath;
+        case "link":
+        return LinkMarkerIconPath;
         default:
         return PlaceMarkerIconPath;
     }

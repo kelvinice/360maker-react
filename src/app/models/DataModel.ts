@@ -24,6 +24,7 @@ export interface Marker {
     tooltip?: string
     mediaPath?: string
     description?: string
+    url?: string
 }
 
 export interface SettingModel {

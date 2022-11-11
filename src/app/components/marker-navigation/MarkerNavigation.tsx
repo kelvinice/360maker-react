@@ -1,6 +1,6 @@
 import React, {ReactNode, useCallback} from 'react';
 import Draggable from "react-draggable";
-import {Chat, Close, Image, Mouse, OpenWith, Settings, Videocam, Delete, PinDropSharp, LocationSearching} from '@material-ui/icons'
+import {Chat, Close, Image, Mouse, OpenWith, Settings, Videocam, Delete, PinDropSharp, LocationSearching, Link, PanoramaFishEye, Widgets} from '@material-ui/icons'
 import {useMenu} from "../../providers/MenuProvider";
 import {useAtom} from "jotai";
 import {mouseStateAtom} from "../../atoms/DataAtom";
@@ -53,7 +53,23 @@ const MarkerNavigation = () => {
             icon: <Chat />,
             text: "Text Marker",
             targetMouseState: MouseState.MarkerDescription,
+        },
+        {
+            icon: <Link />,
+            text: "Link Marker",
+            targetMouseState: MouseState.MarkerLink,
+        },
+        {
+            icon: <PanoramaFishEye />,
+            text: "Blank Marker",
+            targetMouseState: MouseState.MarkerBlank,
+        },
+        {
+            icon: <Widgets />,
+            text: "Custom Marker",
+            targetMouseState: MouseState.MarkerCustom,
         }
+
     ]
 
     const getMouseState = useAtomCallback(useCallback((get) => {
