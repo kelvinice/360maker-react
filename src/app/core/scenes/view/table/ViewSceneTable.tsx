@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../../atoms/DataAtom";
 import {SweetAlert} from "../../../../constants/SweetAlert";
@@ -64,9 +64,14 @@ const ViewSceneTable = () => {
     }
 
     const copyLink = (scene: Scene) => {
-        navigator.clipboard.writeText(window.location.origin + "/?scene=" + scene.id);
+        const location = window.location;
+        navigator.clipboard.writeText(location.origin + location.pathname + "?scene=" + scene.id);
         toast.success("Link copied");
     }
+
+    useEffect(() => {
+        setPage(1);
+    }, [search]);
 
     const scenesToDisplay = (scenes || []).filter((scene) => scene.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -78,7 +83,7 @@ const ViewSceneTable = () => {
                 </div>
             </div>
 
-            <table className="table table-striped table-responsive">
+            <table className="table table-striped table-responsive table-hover">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -89,7 +94,6 @@ const ViewSceneTable = () => {
                 </thead>
                 <tbody>
                 {
-
                     scenes && scenes.filter((scene) => scene.name.toLowerCase().includes(search.toLowerCase())).slice((page - 1) * itemPerPage, page * itemPerPage).map((scene, index) => (
                         <tr key={scene.id}>
                             <th scope="row">{leadingZeros((page - 1) * itemPerPage + index + 1, digitCount(scenesToDisplay.length))}</th>
@@ -138,7 +142,7 @@ const ViewSceneTable = () => {
                             ))
                         }
                         <li className="page-item">
-                            <button className="page-link" onClick={() => changePage(page + 1)} disabled={page - 1 === Math.ceil(scenesToDisplay.length / itemPerPage)}>Next</button>
+                            <button className="page-link" onClick={() => changePage(page + 1)} disabled={page === Math.ceil(scenesToDisplay.length / itemPerPage)}>Next</button>
                         </li>
                     </ul>
                 </nav>
