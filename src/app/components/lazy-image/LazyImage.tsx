@@ -22,6 +22,7 @@ const LazyImage: FC<LazyImageProps> = (props) => {
                     </div>
                 </div>
             }
+
             <img
                 alt={props.alt}
                 src={props.src}

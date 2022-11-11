@@ -4,21 +4,22 @@ import {MDBBtn, MDBModalBody, MDBModalFooter} from "mdb-react-ui-kit";
 import {Scene} from "../../../../models/DataModel";
 import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../../atoms/DataAtom";
-import {v4 as uuidv4} from 'uuid';
 import toast from "react-hot-toast";
 import {useMenu} from "../../../../providers/MenuProvider";
+import {generateUUID} from "../../../../utility/Utility";
 
-
-const AddSceneModalForm = () => {
+const ManageSceneModalForm = () => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm<Scene>();
     const {setSceneToManage, sceneToManage} = useMenu();
     const [scenes, setScenes] = useAtom(dataScenesAtom);
 
     useEffect(() => {
-        if(!scenes || sceneToManage === "")
+        reset({});
+        if(!scenes || sceneToManage === null) {
             return;
+        }
         const scene = scenes.find(scene => scene.id === sceneToManage);
-        if (sceneToManage !== null) {
+        if(scene) {
             reset(scene);
         }
     }, [reset, sceneToManage, scenes]);
@@ -27,7 +28,7 @@ const AddSceneModalForm = () => {
         if(sceneToManage === null)
             return;
         if(sceneToManage === ""){
-            data.id = uuidv4();
+            data.id = generateUUID();
             data.markers = [];
             if(scenes)
                 setScenes([...scenes, data]);
@@ -36,11 +37,14 @@ const AddSceneModalForm = () => {
             if(scenes)
                 setScenes(scenes.map(scene => scene.id === sceneToManage ? data : scene));
             toast.success("Scene updated");
-
         }
 
         setSceneToManage(null);
         reset();
+    }
+
+    if(sceneToManage === null){
+        return <></>;
     }
 
     return (
@@ -70,4 +74,4 @@ const AddSceneModalForm = () => {
     );
 };
 
-export default AddSceneModalForm;
+export default ManageSceneModalForm;

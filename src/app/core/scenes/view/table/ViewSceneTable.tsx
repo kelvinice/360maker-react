@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import {Scene} from "../../../../models/DataModel";
 import {changeScene} from "../../../PhotoSphereViewer";
 import {useMenu} from "../../../../providers/MenuProvider";
+import clsx from "clsx";
 
 const ViewSceneTable = () => {
     const [scenes, setScenes] = useAtom(dataScenesAtom);
@@ -120,7 +121,9 @@ const ViewSceneTable = () => {
                         </li>
                         {
                             scenes && Array.from(Array(Math.ceil(scenesToDisplay.length / itemPerPage)).keys()).map((index) => (
-                                <li className="page-item" key={index}>
+                                <li className={clsx({
+                                    "active": page === index + 1,
+                                }, "page-item")} key={index}>
                                     <button className="page-link" onClick={() => changePage(index + 1)}>{index + 1}</button>
                                 </li>
                             ))

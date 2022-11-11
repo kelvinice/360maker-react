@@ -6,22 +6,24 @@ import {useAtom} from "jotai";
 import {mouseStateAtom} from "../../atoms/DataAtom";
 import clsx from "clsx";
 import {MouseState} from "../../constants/MouseState";
-import {MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBDropdown} from "mdb-react-ui-kit";
+import {MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBDropdown, MDBBtn} from "mdb-react-ui-kit";
 import {useAtomCallback} from "jotai/utils";
 
 
 const MouseStateButton = (props: { targetMouseState: MouseState, color : string, children: ReactNode, text?: string, className?: string, tooltip?: string }) => {
     const [mouseState, setMouseState] = useAtom(mouseStateAtom);
     return (
-        <div
-            data-toggle="tooltip" title={props.tooltip}
-            className={clsx({
-            "active": props.targetMouseState === mouseState,
-        }, `btn btn-sm btn-${props.color} d-flex align-item-center ${props.className || ""}`)} onClick={()=>setMouseState(props.targetMouseState)}>
-            <div className="d-flex align-items-center ">
-                {props.children}
-                {props.text && <span className="ms-2 fw-bold">{props.text}</span>}
-            </div>
+        <div className={props.className || ""}>
+            <MDBBtn
+                data-toggle="tooltip" title={props.tooltip}
+                className={clsx({
+                    "active": props.targetMouseState === mouseState,
+                }, `btn btn-sm btn-${props.color} d-flex align-item-center w-100 `)} onClick={()=>setMouseState(props.targetMouseState)}>
+                <div className="d-flex align-items-center ">
+                    {props.children}
+                    {props.text && <span className="ms-2 fw-bold">{props.text}</span>}
+                </div>
+            </MDBBtn>
         </div>
     )
 }
@@ -88,7 +90,7 @@ const MarkerNavigation = () => {
                                 markers.map((marker, index) => (
                                     <MDBDropdownItem link key={index} className="flat-a">
                                         <MouseStateButton text={marker.text} color="primary" targetMouseState={marker.targetMouseState} children={marker.icon}
-                                            className="m-2"
+                                            className="p-1"
                                         />
                                     </MDBDropdownItem>
                                 ))
@@ -99,9 +101,9 @@ const MarkerNavigation = () => {
 
                     <div className="border border-dark border-1 h-auto"/>
 
-                    <button className="btn btn-danger btn-sm" onClick={() => setMarkerNavigationOpen(false)} data-toggle="tooltip" title="Close Navigation">
+                    <MDBBtn className="btn btn-danger btn-sm" onClick={() => setMarkerNavigationOpen(false)} data-toggle="tooltip" title="Close Navigation">
                         <Close/>
-                    </button>
+                    </MDBBtn>
                 </div>
 
             </div>

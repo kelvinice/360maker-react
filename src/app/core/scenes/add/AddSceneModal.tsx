@@ -8,7 +8,7 @@ import {
     MDBModalTitle
 } from "mdb-react-ui-kit";
 import {useMenu} from "../../../providers/MenuProvider";
-import AddSceneModalForm from "./form/AddSceneModalForm";
+import ManageSceneModalForm from "./form/ManageSceneModalForm";
 
 const AddSceneModal = () => {
     const {setSceneToManage, sceneToManage} = useMenu();
@@ -21,7 +21,7 @@ const AddSceneModal = () => {
                         <MDBModalTitle>Manage Scene</MDBModalTitle>
                         <MDBBtn className='btn-close' color='none' onClick={()=>{setSceneToManage(null)}}></MDBBtn>
                     </MDBModalHeader>
-                    <AddSceneModalForm />
+                    <ManageSceneModalForm />
                 </MDBModalContent>
             </MDBModalDialog>
         </MDBModal>

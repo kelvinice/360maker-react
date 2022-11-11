@@ -60,7 +60,7 @@ const DataInit:FC<WithChildren> = ({children}) => {
     const [ready, setReady] = useState(false);
     const [scene, setScene] = useAtom(dataScenesAtom);
     const [setting, setSetting] = useAtom(settingsAtom);
-    const [shortcuts, setShortcuts] = useAtom(shortcutsAtom);
+    const [, setShortcuts] = useAtom(shortcutsAtom);
     const [, setIsDev] = useAtom(isDevAtom);
     let firstLoad = true;
 
@@ -89,6 +89,7 @@ const DataInit:FC<WithChildren> = ({children}) => {
                 }
                 setScene(data.scenes);
                 setSetting(data.setting);
+                data.shortcuts ? setShortcuts(data.shortcuts) : setShortcuts(initialDataShortcut);
             }
         }catch (e) {
             console.error(e);

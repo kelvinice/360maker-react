@@ -6,7 +6,7 @@ import {
     MDBModalContent,
     MDBModalDialog,
     MDBModalHeader,
-    MDBModalTitle
+    MDBModalTitle, MDBRipple
 } from "mdb-react-ui-kit";
 import {useMenu} from "../../providers/MenuProvider";
 import LazyImage from "../lazy-image/LazyImage";
@@ -26,7 +26,9 @@ const ViewVideoModal = () => {
                                 <MDBBtn className='btn-close' color='none' onClick={()=>setImageToView(null)}></MDBBtn>
                             </MDBModalHeader>
                             <MDBModalBody>
-                                <LazyImage src={imageToView} alt={imageToView} width={"100%"} height={"500px"} />
+                                <MDBRipple rippleTag='span' rippleColor="light" className={"w-100"} rippleDuration={1500}>
+                                    <LazyImage src={imageToView} alt={imageToView} width={"100%"} height={"500px"} />
+                                </MDBRipple>
                             </MDBModalBody>
                         </MDBModalContent>
                     </MDBModalDialog>

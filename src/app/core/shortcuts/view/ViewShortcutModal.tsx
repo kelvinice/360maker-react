@@ -9,13 +9,14 @@ import {
     MDBModalTitle
 } from "mdb-react-ui-kit";
 import {useMenu} from "../../../providers/MenuProvider";
+import ViewShortcutTable from "./table/ViewShortcutTable";
 
 const ViewShortcutModal = () => {
-    const {modalShortcut, setModalShortcut, setShortcutToManage, shortcutToManage} = useMenu();
+    const {modalShortcut, setModalShortcut, setShortcutIdToManage, shortcutIdToManage} = useMenu();
 
     return (
         <>
-            <MDBModal staticBackdrop show={modalShortcut && shortcutToManage === null} tabIndex='-1'>
+            <MDBModal staticBackdrop show={modalShortcut && shortcutIdToManage === null} tabIndex='-1'>
                 <MDBModalDialog size={"lg"}>
                     <MDBModalContent>
                         <MDBModalHeader>
@@ -23,10 +24,10 @@ const ViewShortcutModal = () => {
                             <MDBBtn className='btn-close' color='none' onClick={()=>setModalShortcut(false)}></MDBBtn>
                         </MDBModalHeader>
                         <MDBModalBody>
-                            Shortcut
+                            <ViewShortcutTable />
                         </MDBModalBody>
                         <MDBModalFooter>
-                            <MDBBtn color='secondary' onClick={()=>setShortcutToManage("")}>Add Shortcut</MDBBtn>
+                            <MDBBtn color='primary' onClick={()=>setShortcutIdToManage("")}>Add Shortcut</MDBBtn>
                         </MDBModalFooter>
                     </MDBModalContent>
                 </MDBModalDialog>

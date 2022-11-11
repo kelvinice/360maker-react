@@ -5,8 +5,8 @@ import {Marker} from "../models/DataModel";
 type PageContextProps = {
     sceneToManage: string|null,
     setSceneToManage: Dispatch<SetStateAction<string|null>>
-    shortcutToManage: string|null,
-    setShortcutToManage: Dispatch<SetStateAction<string|null>>
+    shortcutIdToManage: string|null,
+    setShortcutIdToManage: Dispatch<SetStateAction<string|null>>
     modalViewScene: boolean
     setModalViewScene: Dispatch<SetStateAction<boolean>>
     markerToConfig: Marker|null;
@@ -30,8 +30,8 @@ type PageContextProps = {
 const initialMenu:PageContextProps = {
     sceneToManage: null,
     setSceneToManage: () => {},
-    shortcutToManage: null,
-    setShortcutToManage: () => {},
+    shortcutIdToManage: null,
+    setShortcutIdToManage: () => {},
     modalViewScene: false,
     setModalViewScene: () => {},
     markerToConfig: null,
@@ -56,7 +56,7 @@ const MenuContext = createContext<PageContextProps>(initialMenu)
 
 const MenuProvider: FC<WithChildren> = ({children}) => {
     const [sceneToManage, setSceneToManage] = useState<string|null>(null)
-    const [shortcutToManage, setShortcutToManage] = useState<string|null>(null);
+    const [shortcutIdToManage, setShortcutIdToManage] = useState<string|null>(null)
     const [modalViewScene, setModalViewScene] = useState<boolean>(initialMenu.modalViewScene)
     const [modalSetting, setModalSetting] = useState<boolean>(initialMenu.modalSetting)
     const [markerToConfig, setMarkerToConfig] = useState<Marker|null>(initialMenu.markerToConfig)
@@ -71,7 +71,7 @@ const MenuProvider: FC<WithChildren> = ({children}) => {
         <MenuContext.Provider
             value={{
                 sceneToManage, setSceneToManage,
-                shortcutToManage, setShortcutToManage,
+                shortcutIdToManage, setShortcutIdToManage,
                 modalViewScene, setModalViewScene,
                 markerToConfig, setMarkerToConfig,
                 modalSetting, setModalSetting,
