@@ -13,7 +13,7 @@ import VRButton from "./components/ui/VRButton";
 import {WithChildren} from "./types/WithChildren";
 import FileManagement from "./core/files/FileManagement";
 import {useAtom} from "jotai";
-import {dataScenesAtom, isDevAtom, settingsAtom, shortcutsAtom} from "./atoms/DataAtom";
+import {dataScenesAtom, isEditorAtom, settingsAtom, shortcutsAtom} from "./atoms/DataAtom";
 import {initialDataScene, initialDataSetting, initialDataShortcut} from "./data/InitialData";
 import {getURLParameter, tryParseJSON} from "./utility/Utility";
 import ShortcutWrapper from "./components/shortcut/ShortcutWrapper";
@@ -21,12 +21,12 @@ import BackButton from "./components/ui/BackButton";
 
 const App = () => {
     const {MarkerNavigationOpen} = useMenu();
-    const [isDev] = useAtom(isDevAtom);
+    const [isEditor] = useAtom(isEditorAtom);
 
     return (
         <div className="App">
             <PhotoSphereViewer />
-            {isDev &&
+            {isEditor &&
                 <div className="ui-menu top-0 end-0">
                     <FloatingButton />
                 </div>
@@ -42,7 +42,7 @@ const App = () => {
                 <ShortcutWrapper />
             </div>
 
-            {MarkerNavigationOpen && isDev && <MarkerNavigation />}
+            {MarkerNavigationOpen && isEditor && <MarkerNavigation />}
             <ModalWrapper />
         </div>
     );
@@ -65,14 +65,14 @@ const DataInit:FC<WithChildren> = ({children}) => {
     const [scene, setScene] = useAtom(dataScenesAtom);
     const [setting, setSetting] = useAtom(settingsAtom);
     const [, setShortcuts] = useAtom(shortcutsAtom);
-    const [, setIsDev] = useAtom(isDevAtom);
+    const [, setIsEditorMode] = useAtom(isEditorAtom);
     let firstLoad = true;
 
     const init = async () => {
-        const dev = getURLParameter("dev");
-        const is_dev:boolean = process.env.REACT_APP_IS_DEV === "true" || dev === "1";
+        const edit = getURLParameter("edit");
+        const is_dev:boolean = process.env.REACT_APP_IS_DEV === "true" || edit === "1";
         const dataPath = process.env.REACT_APP_DATA_URL;
-        setIsDev(is_dev);
+        setIsEditorMode(is_dev);
         if(is_dev && scene && setting){
             return;
         }

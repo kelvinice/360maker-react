@@ -2,7 +2,9 @@ import {Scene, SettingModel, Shortcut} from "../models/DataModel";
 
 export const initialDataScene: Scene[] = [];
 export const initialDataSetting: SettingModel = {
-    initialScene: ""
+    initialScene: "",
+    defaultMarkerWidth: 32,
+    defaultMarkerHeight: 32
 }
 export const initialDataShortcut: Shortcut[] = [];
 

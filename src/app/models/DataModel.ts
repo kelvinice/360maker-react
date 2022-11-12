@@ -21,14 +21,19 @@ export interface Marker {
         longitude: number
     }
     targetSceneId?: string
-    tooltip?: string
     mediaPath?: string
     description?: string
     url?: string
+
+    tooltip?: string
+    width?: number
+    height?: number
 }
 
 export interface SettingModel {
     initialScene: string
+    defaultMarkerWidth: number
+    defaultMarkerHeight: number
 }
 
 export interface ShortcutSceneMetadata {

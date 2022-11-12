@@ -10,4 +10,4 @@ export const shortcutsAtom = atomWithStorage<Shortcut[]|undefined>(JotaiConstant
 export const mouseStateAtom = atom<MouseState>(MouseState.Cursor);
 // export const currentSceneAtom = atom<Scene|undefined>(undefined);
 export const sceneHistoryAtom = atom<Scene[]>([]);
-export const isDevAtom = atom<boolean>(false);
+export const isEditorAtom = atom<boolean>(false);
