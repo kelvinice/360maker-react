@@ -6,7 +6,7 @@ import {Global} from "../data/Global";
 import {Marker, Scene} from "../models/DataModel";
 import {v4 as uuidv4} from "uuid";
 import {useAtom} from "jotai";
-import {dataScenesAtom, mouseStateAtom, settingsAtom} from "../atoms/DataAtom";
+import {dataScenesAtom, mouseStateAtom, sceneHistoryAtom, settingsAtom} from "../atoms/DataAtom";
 import {useAtomCallback} from "jotai/utils";
 import {useMenu} from "../providers/MenuProvider";
 import toast from 'react-hot-toast';
@@ -20,6 +20,7 @@ const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
     const [scenes, setScenes] = useAtom(dataScenesAtom);
     const [setting] = useAtom(settingsAtom);
+    const [,setSceneHistory] = useAtom(sceneHistoryAtom);
     const {setMarkerToConfig, setVideoToView, setImageToView} = useMenu();
 
     const deleteMarker = useAtomCallback(useCallback((get, set, marker: Marker) => {
@@ -107,6 +108,9 @@ const PhotoSphereViewer = () => {
                             if(!scene){
                                 toast.error("Scene not found");
                                 return;
+                            }
+                            if(Global.currentScene){
+                                setSceneHistory(history => [...history, Global.currentScene]);
                             }
                             changeScene(scene);
                         });

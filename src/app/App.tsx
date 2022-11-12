@@ -9,7 +9,7 @@ import {MenuProvider, useMenu} from "./providers/MenuProvider";
 import {Toaster} from "react-hot-toast";
 import ModalWrapper from "./components/ModalWrapper";
 import MarkerNavigation from "./components/marker-navigation/MarkerNavigation";
-import VRButton from "./components/vr/VRButton";
+import VRButton from "./components/ui/VRButton";
 import {WithChildren} from "./types/WithChildren";
 import FileManagement from "./core/files/FileManagement";
 import {useAtom} from "jotai";
@@ -17,6 +17,7 @@ import {dataScenesAtom, isDevAtom, settingsAtom, shortcutsAtom} from "./atoms/Da
 import {initialDataScene, initialDataSetting, initialDataShortcut} from "./data/InitialData";
 import {getURLParameter, tryParseJSON} from "./utility/Utility";
 import ShortcutWrapper from "./components/shortcut/ShortcutWrapper";
+import BackButton from "./components/ui/BackButton";
 
 const App = () => {
     const {MarkerNavigationOpen} = useMenu();
@@ -32,6 +33,9 @@ const App = () => {
             }
 
             <div className="ui-menu start-0 top-50">
+                <BackButton />
+            </div>
+            <div className="ui-menu end-0 top-50">
                 <VRButton />
             </div>
             <div className="ui-menu start-0 bottom-0 d-flex mb-5 w-100 " >

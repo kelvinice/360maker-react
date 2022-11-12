@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../../atoms/DataAtom";
 import {useForm, UseFormHandleSubmit, UseFormRegister, UseFormSetValue} from "react-hook-form";
@@ -13,12 +13,21 @@ import VideoMarkerConfig from "../video-marker/VideoMarkerConfig";
 import ImageMarkerConfig from "../image-marker/ImageMarkerConfig";
 import DescriptionMarkerConfig from "../description-marker/DescriptionMarkerConfig";
 import {MarkersPlugin} from "photo-sphere-viewer/dist/plugins/markers";
+import {
+    MDBBtn, MDBIcon,
+    MDBModalBody,
+    MDBModalFooter,
+    MDBTabs,
+    MDBTabsContent,
+    MDBTabsItem, MDBTabsLink,
+    MDBTabsPane
+} from "mdb-react-ui-kit";
+import GeneralMarkerSetting from "../general-setting/GeneralMarkerSetting";
 
 export interface ConfigMarkerModalProps {
     register:  UseFormRegister<Marker>,
     handleSubmit: UseFormHandleSubmit<Marker>,
     setValue: UseFormSetValue<Marker>,
-    submit: any,
 }
 
 export interface ConfigMarkerModalChildProps {
@@ -29,6 +38,7 @@ const MarkerConfigParent = () => {
     const [scenes, setScene] = useAtom(dataScenesAtom);
     const {register, handleSubmit, setValue, reset}= useForm<Marker>();
     const {markerToConfig, setMarkerToConfig} = useMenu();
+    const [iconsActive, setIconsActive] = useState('tab1');
 
     useEffect(() => {
         if (markerToConfig) {
@@ -62,7 +72,7 @@ const MarkerConfigParent = () => {
         }
     }
 
-    const props = {register, submit, handleSubmit, setValue};
+    const props = {register, handleSubmit, setValue};
 
     const renderMarkerConfig = () => {
         switch (markerToConfig?.type) {
@@ -79,9 +89,41 @@ const MarkerConfigParent = () => {
         }
     }
 
+
+
+    const handleIconsClick = (value: string) => {
+        if (value === iconsActive) {
+            return;
+        }
+
+        setIconsActive(value);
+    };
+
     return (
         <>
-            {renderMarkerConfig()}
+            <MDBModalBody>
+                <MDBTabs justify className='mb-3'>
+                    <MDBTabsItem>
+                        <MDBTabsLink onClick={() => handleIconsClick('tab1')} active={iconsActive === 'tab1'}>
+                            <MDBIcon fas icon='map-marker-alt' className='me-2' /> Marker data
+                        </MDBTabsLink>
+                    </MDBTabsItem>
+                    <MDBTabsItem>
+                        <MDBTabsLink onClick={() => handleIconsClick('tab2')} active={iconsActive === 'tab2'}>
+                            <MDBIcon fas icon='ellipsis-h' className='me-2' /> General
+                        </MDBTabsLink>
+                    </MDBTabsItem>
+                </MDBTabs>
+
+                <MDBTabsContent>
+                    <MDBTabsPane show={iconsActive === 'tab1'}>{renderMarkerConfig()}</MDBTabsPane>
+                    <MDBTabsPane show={iconsActive === 'tab2'}><GeneralMarkerSetting props={props}/></MDBTabsPane>
+                </MDBTabsContent>
+
+            </MDBModalBody>
+            <MDBModalFooter>
+                <MDBBtn color='primary' onClick={handleSubmit(submit)}>Save Config</MDBBtn>
+            </MDBModalFooter>
         </>
     );
 };

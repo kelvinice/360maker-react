@@ -24,10 +24,6 @@ const PlaceConfigMarkerForm: FC<ConfigMarkerModalChildProps> = ({props}) => {
                     }}
                     />
             </div>
-            <div className="form-group mb-3">
-                <label htmlFor="targetSceneId" className="fw-bold">Tooltip</label>
-                <input type="text" className="form-control" id="tooltip" {...props.register("tooltip")} />
-            </div>
         </form>
     );
 };
