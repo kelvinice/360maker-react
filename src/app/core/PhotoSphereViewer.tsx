@@ -3,7 +3,7 @@ import {Viewer} from "photo-sphere-viewer";
 import {MarkersPlugin} from "photo-sphere-viewer/dist/plugins/markers";
 import {GyroscopePlugin} from "photo-sphere-viewer/dist/plugins/gyroscope";
 import {Global} from "../data/Global";
-import {Marker, Scene} from "../models/DataModel";
+import {Marker, Scene, SettingModel} from "../models/DataModel";
 import {v4 as uuidv4} from "uuid";
 import {useAtom} from "jotai";
 import {dataScenesAtom, mouseStateAtom, sceneHistoryAtom, settingsAtom} from "../atoms/DataAtom";
@@ -75,6 +75,11 @@ const PhotoSphereViewer = () => {
         return await currentScene.markers.find(marker => marker.id === markerId);
     }, []));
 
+    useEffect(() => {
+        if(setting){
+            Global.setting = setting;
+        }
+    }, [setting])
 
     useEffect(()=>{
         if(!ref || !ref.current || Global.viewer)
@@ -152,6 +157,24 @@ const PhotoSphereViewer = () => {
             if (!data.rightclick && Global.currentScene) {
                 const mouseState = getMouseState();
                 let type: string|null = null;
+                // console.log(data.longitude);
+                // console.log(data.latitude);
+                //
+                // markersPlugin?.addMarker({
+                //     id: uuidv4(),
+                //     // circle: 140,
+                //     opacity: 1,
+                //     longitude: data.longitude,
+                //     latitude: data.latitude,
+                //     width: 500,
+                //     height: 500,
+                //     tooltip: 'A circle marker',
+                //     className: 'marker-color',
+                //     imageLayer: 'https://socs1.binus.ac.id/messier/images/binus-logo-dark.png',
+                //     style: {
+                //         "background-color": "red",
+                //     }
+                // })
 
                 switch (mouseState) {
                     case MouseState.MarkerPlace:
@@ -194,9 +217,9 @@ const PhotoSphereViewer = () => {
                             id: newMarker.id as string,
                             longitude: data.longitude,
                             latitude: data.latitude,
-                            image: MarkerIconByType(type),
-                            width: 32,
-                            height: 32,
+                            imageLayer: MarkerIconByType(type),
+                            width: Number(setting?.defaultMarkerSize),
+                            height: Number(setting?.defaultMarkerSize),
                             anchor: 'bottom center',
                             tooltip: newMarker.name,
                             data: {
@@ -244,7 +267,6 @@ const PhotoSphereViewer = () => {
         return get(mouseStateAtom);
     }, []));
 
-
     return (
         <div id="viewer" ref={ref} />
     )
@@ -255,13 +277,15 @@ const initMarkerOnScene = (scene: Scene) => {
     if(!markersPlugin)
         return;
     scene.markers.forEach(m => {
+        const size = m.size ? m.size : Global.setting.defaultMarkerSize;
+
         markersPlugin.addMarker({
             id: m.id as string,
             longitude: m.location.longitude,
             latitude: m.location.latitude,
-            image: MarkerIconByType(m.type),
-            width: 32,
-            height: 32,
+            imageLayer: m.customIcon ? m.customIcon : MarkerIconByType(m.type),
+            width: Number(size),
+            height: Number(size),
             anchor: 'bottom center',
             tooltip: m.tooltip || m.name,
             data: {

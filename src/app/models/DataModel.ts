@@ -26,14 +26,13 @@ export interface Marker {
     url?: string
 
     tooltip?: string
-    width?: number
-    height?: number
+    size?: number
+    customIcon?: string
 }
 
 export interface SettingModel {
     initialScene: string
-    defaultMarkerWidth: number
-    defaultMarkerHeight: number
+    defaultMarkerSize: number
 }
 
 export interface ShortcutSceneMetadata {

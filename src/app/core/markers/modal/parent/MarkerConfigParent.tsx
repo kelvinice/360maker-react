@@ -57,11 +57,14 @@ const MarkerConfigParent = () => {
             const markersPlugin = Global.viewer.getPlugin(MarkersPlugin);
             if(markersPlugin && data.id) {
                 const contextMarker = markersPlugin.getMarker(data.id);
+                const size = data.size ? data.size : Global.setting.defaultMarkerSize;
                 if(contextMarker) {
                     const properties = {
                         ...contextMarker.config,
                         tooltip: data.tooltip,
-                    }
+                        width: size,
+                        height: size,
+                    };
                     markersPlugin.updateMarker(properties);
                 }
             }

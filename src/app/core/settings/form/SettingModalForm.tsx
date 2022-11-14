@@ -41,34 +41,31 @@ const SettingModalForm:FC<SettingModalChildProps> = ({props}) => {
 
     return (
         <>
-            <form className="d-flex flex-column gap-2">
-                <div className="input-group">
-                    <label className="form-label input-group-text" htmlFor="initialScene">Initial Scene</label>
-                    <select className="form-control" id="initialScene" {...props.register("initialScene", {required: true})}>
-                        {
-                            scenes?.map(scene => (
-                                <option key={scene.id} value={scene.id}>{scene.name}</option>
-                            ))
-                        }
-                    </select>
+            <form >
+                <div className="form-group">
+                    <div className="input-group">
+                        <label className="form-label input-group-text" htmlFor="initialScene">Initial Scene</label>
+                        <select className="form-control" id="initialScene" {...props.register("initialScene", {required: true})}>
+                            {
+                                scenes?.map(scene => (
+                                    <option key={scene.id} value={scene.id}>{scene.name}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
                     {
                         errors.initialScene && <div className="alert alert-danger">{errors.initialScene.message}</div>
                     }
                 </div>
-                <MDBInputGroup textBefore='Default marker width' className={"w-100"}>
-                    <input type="number" className="form-control"
-                        {...props.register("defaultMarkerWidth", {required: true, valueAsNumber: true, min: 1})} />
-                </MDBInputGroup>
-                {
-                    errors.defaultMarkerWidth && <div className="alert alert-danger">{errors.defaultMarkerWidth?.message}</div>
-                }
-                <MDBInputGroup textBefore='Default marker height' className={"w-100"}>
-                    <input type="number" className="form-control"
-                           {...props.register("defaultMarkerHeight", {required: 'Default Marker height is required', valueAsNumber: true, min: 1})} />
-                </MDBInputGroup>
-                {
-                    errors.defaultMarkerHeight && <p className="alert alert-danger">{errors.defaultMarkerHeight?.message}</p>
-                }
+                <div className="form-group">
+                    <MDBInputGroup textBefore='Default marker size' className={"w-100"}>
+                        <input type="number" className="form-control"
+                            {...props.register("defaultMarkerSize", {required: true, valueAsNumber: true})} />
+                    </MDBInputGroup>
+                    {
+                        errors.defaultMarkerSize && <div className="alert alert-danger">{errors.defaultMarkerSize?.message}</div>
+                    }
+                </div>
             </form>
         </>
     );

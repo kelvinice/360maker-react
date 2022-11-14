@@ -20,8 +20,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 const schema = yup.object({
     initialScene: yup.string().required().label("Initial Scene"),
-    defaultMarkerWidth: yup.number().required().min(1).label("Default marker width"),
-    defaultMarkerHeight: yup.number().required().min(1).label("Default marker height"),
+    defaultMarkerSize: yup.number().required().min(1).label("Default marker size"),
 }).required();
 
 const SettingModal = () => {

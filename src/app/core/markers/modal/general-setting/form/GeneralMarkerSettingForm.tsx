@@ -1,13 +1,25 @@
 import React, {FC} from 'react';
 import {ConfigMarkerModalChildProps} from "../../parent/MarkerConfigParent";
+import {MDBInputGroup, MDBBtn} from "mdb-react-ui-kit";
 
 const GeneralMarkerSettingForm: FC<ConfigMarkerModalChildProps> = ({props}) => {
+    const deleteValueOnAttribute = (attribute: any) => {
+        props.setValue(attribute, undefined);
+    }
+
     return (
-        <form>
-            <div className="form-group mb-3">
-                <label htmlFor="targetSceneId" className="fw-bold">Tooltip</label>
+        <form className={"d-flex flex-column gap-2"}>
+            <MDBInputGroup textBefore={"Tooltip"}>
                 <input type="text" className="form-control" id="tooltip" {...props.register("tooltip")} />
-            </div>
+            </MDBInputGroup>
+            <MDBInputGroup textBefore={"Marker size"}>
+                <input type="number" className="form-control" {...props.register("size")} placeholder={"Using marker size default value"} />
+                <MDBBtn type="button" color="secondary" onClick={()=>deleteValueOnAttribute("size")}><i className={"fa fa-trash"}/></MDBBtn>
+            </MDBInputGroup>
+            <MDBInputGroup textBefore={"Custom icon"}>
+                <input type="text" className="form-control" {...props.register("customIcon")} placeholder={"Using marker icon default value"} />
+                <MDBBtn type="button" color="secondary" onClick={()=>deleteValueOnAttribute("customIcon")}><i className={"fa fa-trash"}/></MDBBtn>
+            </MDBInputGroup>
         </form>
     );
 };
