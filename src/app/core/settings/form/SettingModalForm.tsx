@@ -10,7 +10,7 @@ import {
 import {useAtom} from "jotai";
 import {dataScenesAtom, settingsAtom} from "../../../atoms/DataAtom";
 import {SettingModel} from "../../../models/DataModel";
-import {MDBBtn, MDBInput, MDBInputGroup} from "mdb-react-ui-kit";
+import {MDBInputGroup} from "mdb-react-ui-kit";
 
 export type SettingModalProps = {
     register: UseFormRegister<SettingModel>,
@@ -28,28 +28,16 @@ export interface SettingModalChildProps {
 const SettingModalForm:FC<SettingModalChildProps> = ({props}) => {
     const [scenes,] = useAtom(dataScenesAtom);
     const [setting,] = useAtom(settingsAtom);
+    const errors = props.formState.errors;
 
     useEffect(() => {
         if(!setting) return;
         props.reset(setting);
-    }, [props.setValue, setting]);
+    }, [setting]);
 
     if(scenes && scenes.length === 0) return <></>;
 
-    const handleValueChange = (name: any, value: any, valueAsNumber?: boolean) => {
-        if(valueAsNumber){
-            const number = Number(value);
-            if(isNaN(number)) {
-                props.setValue(name, 0);
-                return;
-            }
-            props.setValue(name, Number(value));
-        }else{
-            props.setValue(name, value);
-        }
-    }
-
-    if(!setting || !props.watch("defaultMarkerWidth")) return <></>;
+    if(!setting) return <></>;
 
     return (
         <>
@@ -63,13 +51,24 @@ const SettingModalForm:FC<SettingModalChildProps> = ({props}) => {
                             ))
                         }
                     </select>
+                    {
+                        errors.initialScene && <div className="alert alert-danger">{errors.initialScene.message}</div>
+                    }
                 </div>
-                <MDBInputGroup textBefore='Default Marker width and height' className={"w-100"}>
-                    <MDBInput label='Width' type="number" className="form-control" min={1}
-                              value={props.watch("defaultMarkerWidth")} onChange={(e)=>handleValueChange("defaultMarkerWidth", e.target.value, true)} />
-                    <MDBInput label='Height' type="number" className="form-control" min={1}
-                              value={props.watch("defaultMarkerHeight")} onChange={(e)=>handleValueChange("defaultMarkerHeight", e.target.value, true)} />
+                <MDBInputGroup textBefore='Default marker width' className={"w-100"}>
+                    <input type="number" className="form-control"
+                        {...props.register("defaultMarkerWidth", {required: true, valueAsNumber: true, min: 1})} />
                 </MDBInputGroup>
+                {
+                    errors.defaultMarkerWidth && <div className="alert alert-danger">{errors.defaultMarkerWidth?.message}</div>
+                }
+                <MDBInputGroup textBefore='Default marker height' className={"w-100"}>
+                    <input type="number" className="form-control"
+                           {...props.register("defaultMarkerHeight", {required: 'Default Marker height is required', valueAsNumber: true, min: 1})} />
+                </MDBInputGroup>
+                {
+                    errors.defaultMarkerHeight && <p className="alert alert-danger">{errors.defaultMarkerHeight?.message}</p>
+                }
             </form>
         </>
     );

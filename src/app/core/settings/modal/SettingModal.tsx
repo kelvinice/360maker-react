@@ -15,10 +15,20 @@ import {useAtom} from "jotai";
 import {settingsAtom} from "../../../atoms/DataAtom";
 import toast from "react-hot-toast";
 import {SettingModel} from "../../../models/DataModel";
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const schema = yup.object({
+    initialScene: yup.string().required().label("Initial Scene"),
+    defaultMarkerWidth: yup.number().required().min(1).label("Default marker width"),
+    defaultMarkerHeight: yup.number().required().min(1).label("Default marker height"),
+}).required();
 
 const SettingModal = () => {
     const {setModalSetting, modalSetting} = useMenu();
-    const {register, handleSubmit, setValue, getValues, formState, reset, watch} = useForm<SettingModel>();
+    const {register, handleSubmit, setValue, getValues, formState, reset, watch} = useForm<SettingModel>({
+        resolver: yupResolver(schema)
+    });
     const [, setSetting] = useAtom(settingsAtom);
 
     const submit = (data: SettingModel) => {
@@ -49,7 +59,9 @@ const SettingModal = () => {
                             <SettingModalForm props={props} />
                         </MDBModalBody>
                         <MDBModalFooter>
-                            <MDBBtn color='primary' onClick={handleSubmit(submit)}>Save Setting</MDBBtn>
+                            <MDBBtn color='primary' onClick={()=>{
+                                handleSubmit(submit)()
+                            }}>Save Setting</MDBBtn>
                         </MDBModalFooter>
                     </MDBModalContent>
                 </MDBModalDialog>
