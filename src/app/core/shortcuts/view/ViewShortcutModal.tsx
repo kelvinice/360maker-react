@@ -17,7 +17,7 @@ const ViewShortcutModal = () => {
     return (
         <>
             <MDBModal staticBackdrop show={modalShortcut && shortcutIdToManage === null} tabIndex='-1'>
-                <MDBModalDialog size={"lg"}>
+                <MDBModalDialog size={"lg"} scrollable={true}>
                     <MDBModalContent>
                         <MDBModalHeader>
                             <MDBModalTitle>Shortcut</MDBModalTitle>
