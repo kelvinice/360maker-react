@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {ConfigMarkerModalChildProps} from "../../parent/MarkerConfigParent";
-import {MDBInputGroup, MDBBtn} from "mdb-react-ui-kit";
+import {MDBInputGroup, MDBBtn, MDBSwitch} from "mdb-react-ui-kit";
 
 const GeneralMarkerSettingForm: FC<ConfigMarkerModalChildProps> = ({props}) => {
     const deleteValueOnAttribute = (attribute: any) => {
@@ -19,6 +19,9 @@ const GeneralMarkerSettingForm: FC<ConfigMarkerModalChildProps> = ({props}) => {
             <MDBInputGroup textBefore={"Custom icon"}>
                 <input type="text" className="form-control" {...props.register("customIcon")} placeholder={"Using marker icon default value"} />
                 <MDBBtn type="button" color="secondary" onClick={()=>deleteValueOnAttribute("customIcon")}><i className={"fa fa-trash"}/></MDBBtn>
+            </MDBInputGroup>
+            <MDBInputGroup>
+                <MDBSwitch checked={props.watch('disableClick') || false} label='Disable click' onChange={(e)=>props.setValue('disableClick', e.target.checked)} />
             </MDBInputGroup>
         </form>
     );

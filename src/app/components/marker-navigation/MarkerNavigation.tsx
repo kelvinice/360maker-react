@@ -3,23 +3,24 @@ import Draggable from "react-draggable";
 import {Chat, Close, Image, Mouse, OpenWith, Settings, Videocam, Delete, PinDropSharp, LocationSearching, Link, PanoramaFishEye, Widgets} from '@material-ui/icons'
 import {useMenu} from "../../providers/MenuProvider";
 import {useAtom} from "jotai";
-import {mouseStateAtom} from "../../atoms/DataAtom";
+import {markerToCopyAtom, mouseStateAtom} from "../../atoms/DataAtom";
 import clsx from "clsx";
 import {MouseState} from "../../constants/MouseState";
 import {MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBDropdown, MDBBtn} from "mdb-react-ui-kit";
 import {useAtomCallback} from "jotai/utils";
 
 
-const MouseStateButton = (props: { targetMouseState: MouseState, color : string, children: ReactNode, text?: string, className?: string, tooltip?: string }) => {
+const MouseStateButton = (props: { targetMouseState: MouseState, color : string, children: ReactNode, text?: string, className?: string, tooltip?: string, disabled?: boolean }) => {
     const [mouseState, setMouseState] = useAtom(mouseStateAtom);
     return (
         <div className={props.className || ""}>
             <MDBBtn
                 data-toggle="tooltip" title={props.tooltip}
+                disabled={props.disabled}
                 className={clsx({
                     "active": props.targetMouseState === mouseState,
-                }, `btn btn-sm btn-${props.color} d-flex align-item-center w-100 `)} onClick={()=>setMouseState(props.targetMouseState)}>
-                <div className="d-flex align-items-center ">
+                }, `btn btn-sm btn-${props.color} d-flex align-item-center w-100 h-100`)} onClick={()=>setMouseState(props.targetMouseState)}>
+                <div className="d-flex align-items-center">
                     {props.children}
                     {props.text && <span className="ms-2 fw-bold">{props.text}</span>}
                 </div>
@@ -32,6 +33,7 @@ const MarkerNavigation = () => {
     const {setMarkerNavigationOpen} = useMenu();
     const nodeRef = React.useRef(null);
     const [mouseState] = useAtom(mouseStateAtom);
+    const [markerToCopy, setMarkerToCopy] = useAtom(markerToCopyAtom);
 
     const markers = [
         {
@@ -91,7 +93,9 @@ const MarkerNavigation = () => {
 
                     <MouseStateButton color="info" tooltip="Select Cursor" targetMouseState={MouseState.Cursor} children={<Mouse/>}/>
                     <MouseStateButton color="info" tooltip="Setting Cursor" targetMouseState={MouseState.Setting} children={<Settings/>}/>
-                    <MouseStateButton color="info" tooltip="Delete Cursor" targetMouseState={MouseState.Delete} children={<Delete/>}/>
+                    <MouseStateButton color="info" tooltip="Delete Cursor" targetMouseState={MouseState.Delete} children={<Delete />}/>
+                    <MouseStateButton color="info" tooltip="Copy Cursor" targetMouseState={MouseState.Copy} children={<i className="fa fa-copy fs-5 d-flex justify-content-center align-items-center" style={{height:"24px", width:"24px"}}/>}/>
+                    <MouseStateButton color="info" tooltip="Paste Cursor" disabled={!markerToCopy} targetMouseState={MouseState.Paste} children={<i className="fa fa-paste fs-5 d-flex justify-content-center align-items-center" style={{height:"24px", width:"24px"}}/>}/>
 
                     <MDBDropdown group data-toggle="tooltip" title="Marker cursor">
                         <MDBDropdownToggle className={clsx({

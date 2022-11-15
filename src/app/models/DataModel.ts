@@ -28,6 +28,7 @@ export interface Marker {
     tooltip?: string
     size?: number
     customIcon?: string
+    disableClick?: boolean
 }
 
 export interface SettingModel {

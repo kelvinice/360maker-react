@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useAtom} from "jotai";
 import {dataScenesAtom} from "../../../../atoms/DataAtom";
-import {useForm, UseFormHandleSubmit, UseFormRegister, UseFormSetValue} from "react-hook-form";
+import {useForm, UseFormHandleSubmit, UseFormRegister, UseFormSetValue, UseFormWatch} from "react-hook-form";
 import {Marker} from "../../../../models/DataModel";
 import {useMenu} from "../../../../providers/MenuProvider";
 import {Global} from "../../../../data/Global";
@@ -23,11 +23,13 @@ import {
     MDBTabsPane
 } from "mdb-react-ui-kit";
 import GeneralMarkerSetting from "../general-setting/GeneralMarkerSetting";
+import MarkerIconByType from "../../../../utility/MarkerIconByType";
 
 export interface ConfigMarkerModalProps {
     register:  UseFormRegister<Marker>,
     handleSubmit: UseFormHandleSubmit<Marker>,
     setValue: UseFormSetValue<Marker>,
+    watch: UseFormWatch<Marker>,
 }
 
 export interface ConfigMarkerModalChildProps {
@@ -36,7 +38,7 @@ export interface ConfigMarkerModalChildProps {
 
 const MarkerConfigParent = () => {
     const [scenes, setScene] = useAtom(dataScenesAtom);
-    const {register, handleSubmit, setValue, reset}= useForm<Marker>();
+    const {register, handleSubmit, setValue, reset, watch}= useForm<Marker>();
     const {markerToConfig, setMarkerToConfig} = useMenu();
     const [iconsActive, setIconsActive] = useState('tab1');
 
@@ -64,6 +66,7 @@ const MarkerConfigParent = () => {
                         tooltip: data.tooltip,
                         width: size,
                         height: size,
+                        image: data.customIcon ? data.customIcon : MarkerIconByType(data.type),
                     };
                     markersPlugin.updateMarker(properties);
                 }
@@ -75,7 +78,7 @@ const MarkerConfigParent = () => {
         }
     }
 
-    const props = {register, handleSubmit, setValue};
+    const props = {register, handleSubmit, setValue, watch};
 
     const renderMarkerConfig = () => {
         switch (markerToConfig?.type) {

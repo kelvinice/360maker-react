@@ -6,7 +6,7 @@ import {Global} from "../data/Global";
 import {Marker, Scene, SettingModel} from "../models/DataModel";
 import {v4 as uuidv4} from "uuid";
 import {useAtom} from "jotai";
-import {dataScenesAtom, mouseStateAtom, sceneHistoryAtom, settingsAtom} from "../atoms/DataAtom";
+import {dataScenesAtom, markerToCopyAtom, mouseStateAtom, sceneHistoryAtom, settingsAtom} from "../atoms/DataAtom";
 import {useAtomCallback} from "jotai/utils";
 import {useMenu} from "../providers/MenuProvider";
 import toast from 'react-hot-toast';
@@ -14,13 +14,14 @@ import {MouseState} from "../constants/MouseState";
 import {MarkerType} from "../constants/MarkerType";
 import MarkerIconByType from "../utility/MarkerIconByType";
 import Swal from "sweetalert2";
-import {getURLParameter} from "../utility/Utility";
+import {generateUUID, getURLParameter} from "../utility/Utility";
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
     const [scenes, setScenes] = useAtom(dataScenesAtom);
     const [setting] = useAtom(settingsAtom);
     const [,setSceneHistory] = useAtom(sceneHistoryAtom);
+    const [markerToCopy, setMarkerToCopy] = useAtom(markerToCopyAtom);
     const {setMarkerToConfig, setVideoToView, setImageToView} = useMenu();
 
     const deleteMarker = useAtomCallback(useCallback((get, set, marker: Marker) => {
@@ -73,6 +74,10 @@ const PhotoSphereViewer = () => {
             return;
         }
         return await currentScene.markers.find(marker => marker.id === markerId);
+    }, []));
+
+    const getMarkerToCopy = useAtomCallback(useCallback(async (get, set) => {
+        return get(markerToCopyAtom);
     }, []));
 
     useEffect(() => {
@@ -150,6 +155,14 @@ const PhotoSphereViewer = () => {
                 Global.currentScene.markers = Global.currentScene.markers.filter((m) => m.id !== marker.data.marker.id);
                 if(markersPlugin)
                     markersPlugin.removeMarker(marker.id);
+            }else if(mouseState === MouseState.Copy){
+                const targetMarker = Global.currentScene.markers.find((m) => m.id === marker.data.marker.id);
+                if(!targetMarker){
+                    toast.error("Marker not found");
+                    return;
+                }
+                setMarkerToCopy(targetMarker);
+                toast.success("Marker copied");
             }
         });
 
@@ -157,24 +170,6 @@ const PhotoSphereViewer = () => {
             if (!data.rightclick && Global.currentScene) {
                 const mouseState = getMouseState();
                 let type: string|null = null;
-                // console.log(data.longitude);
-                // console.log(data.latitude);
-                //
-                // markersPlugin?.addMarker({
-                //     id: uuidv4(),
-                //     // circle: 140,
-                //     opacity: 1,
-                //     longitude: data.longitude,
-                //     latitude: data.latitude,
-                //     width: 500,
-                //     height: 500,
-                //     tooltip: 'A circle marker',
-                //     className: 'marker-color',
-                //     imageLayer: 'https://socs1.binus.ac.id/messier/images/binus-logo-dark.png',
-                //     style: {
-                //         "background-color": "red",
-                //     }
-                // })
 
                 switch (mouseState) {
                     case MouseState.MarkerPlace:
@@ -191,6 +186,9 @@ const PhotoSphereViewer = () => {
                         break;
                     case MouseState.MarkerLink:
                         type = MarkerType.LINK;
+                        break;
+                    case MouseState.MarkerBlank:
+                        type = MarkerType.BLANK;
                         break;
                 }
 
@@ -217,18 +215,50 @@ const PhotoSphereViewer = () => {
                             id: newMarker.id as string,
                             longitude: data.longitude,
                             latitude: data.latitude,
-                            imageLayer: MarkerIconByType(type),
+                            image: newMarker.customIcon ? newMarker.customIcon : MarkerIconByType(type),
                             width: Number(setting?.defaultMarkerSize),
                             height: Number(setting?.defaultMarkerSize),
-                            anchor: 'bottom center',
+                            // anchor: 'bottom center',
                             tooltip: newMarker.name,
                             data: {
                                 generated: true,
                                 scene: Global.currentScene,
                                 marker: newMarker
-                            }
+                            },
+                            className: "marker-style"
                         });
                     saveScene();
+                }else{
+                    if(mouseState === MouseState.Paste){
+                        (async () => {
+                            const markerToCopy = await getMarkerToCopy();
+                            const newMarker: Marker = {...markerToCopy, location: {latitude: data.latitude, longitude: data.longitude}
+                                , name: markerToCopy?.name as string, type: markerToCopy?.type as string, id: generateUUID(),
+                            };
+
+                            const type = newMarker.type;
+                            if(markersPlugin)
+                                markersPlugin.addMarker({
+                                    id: newMarker.id as string,
+                                    longitude: data.longitude,
+                                    latitude: data.latitude,
+                                    image: newMarker.customIcon ? newMarker.customIcon : MarkerIconByType(type),
+                                    width: newMarker.size ? newMarker.size : Number(setting?.defaultMarkerSize),
+                                    height: newMarker.size ? newMarker.size : Number(setting?.defaultMarkerSize),
+                                    tooltip: newMarker.name,
+                                    data: {
+                                        generated: true,
+                                        scene: Global.currentScene,
+                                        marker: newMarker
+                                    },
+                                    className: "marker-style"
+                                });
+                            if(newMarker){
+                                Global.currentScene.markers.push(newMarker);
+                                saveScene();
+                            }
+                        })();
+                    }
                 }
             }
         });
@@ -283,16 +313,17 @@ const initMarkerOnScene = (scene: Scene) => {
             id: m.id as string,
             longitude: m.location.longitude,
             latitude: m.location.latitude,
-            imageLayer: m.customIcon ? m.customIcon : MarkerIconByType(m.type),
+            image: m.customIcon ? m.customIcon : MarkerIconByType(m.type),
             width: Number(size),
             height: Number(size),
-            anchor: 'bottom center',
+            // anchor: 'bottom center',
             tooltip: m.tooltip || m.name,
             data: {
                 generated: false,
                 scene: scene,
                 marker: m
-            }
+            },
+            className: "marker-style"
         });
     });
 }

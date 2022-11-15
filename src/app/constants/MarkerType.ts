@@ -4,4 +4,6 @@ export const MarkerType = {
     IMAGE: "image",
     DESCRIPTION: "description",
     LINK: "link",
+    BLANK: "blank",
+    CUSTOM: "custom",
 }

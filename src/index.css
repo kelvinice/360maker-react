@@ -35,3 +35,7 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #414141;
 }
+
+.marker-style{
+  background-position: center;
+}
