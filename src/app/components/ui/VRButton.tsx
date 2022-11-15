@@ -10,7 +10,7 @@ const VrButton = () => {
 
     return (
         <MDBBtn className="m-2 btn btn-secondary btn-lg rounded-circle opacity-50 d-flex justify-content-center align-items-center" style={{width:"50px", height:"50px"}}
-                onClick={()=>openLinkInNewTab(`https://competition.binus.ac.id/vr/vr.php?url=${Global.currentScene.path}`)}>
+                onClick={()=>openLinkInNewTab(`/vr/vr.php?url=${Global.currentScene.path}`)}>
             <i className="fa fa-vr-cardboard" style={{fontSize:"20px"}}/>
         </MDBBtn>
     );

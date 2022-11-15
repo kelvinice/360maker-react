@@ -110,7 +110,7 @@ const PhotoSphereViewer = () => {
             const mouseState = getMouseState();
             if(mouseState === MouseState.Cursor){
                 getMarker(marker.id).then(marker => {
-                    if(!marker) return;
+                    if(!marker || marker.disableClick) return;
                     if(marker.type === MarkerType.PLACE){
                         getCurrentScene(
                             marker.targetSceneId as string
