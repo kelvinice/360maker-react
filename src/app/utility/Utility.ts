@@ -27,3 +27,8 @@ export const digitCount = (num: number) => {
 export const leadingZeros = (num: number, digits: number) => {
     return num.toString().padStart(digits, "0");
 }
+
+export const openInNewTab = (url: string) => {
+    const win = window.open(url, '_blank');
+    win?.focus();
+}

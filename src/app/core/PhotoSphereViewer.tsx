@@ -3,7 +3,7 @@ import {Viewer} from "photo-sphere-viewer";
 import {MarkersPlugin} from "photo-sphere-viewer/dist/plugins/markers";
 import {GyroscopePlugin} from "photo-sphere-viewer/dist/plugins/gyroscope";
 import {Global} from "../data/Global";
-import {Marker, Scene, SettingModel} from "../models/DataModel";
+import {Marker, Scene} from "../models/DataModel";
 import {v4 as uuidv4} from "uuid";
 import {useAtom} from "jotai";
 import {dataScenesAtom, markerToCopyAtom, mouseStateAtom, sceneHistoryAtom, settingsAtom} from "../atoms/DataAtom";
@@ -14,14 +14,14 @@ import {MouseState} from "../constants/MouseState";
 import {MarkerType} from "../constants/MarkerType";
 import MarkerIconByType from "../utility/MarkerIconByType";
 import Swal from "sweetalert2";
-import {generateUUID, getURLParameter} from "../utility/Utility";
+import {generateUUID, getURLParameter, openInNewTab} from "../utility/Utility";
 
 const PhotoSphereViewer = () => {
     const ref = createRef<HTMLDivElement>();
     const [scenes, setScenes] = useAtom(dataScenesAtom);
     const [setting] = useAtom(settingsAtom);
     const [,setSceneHistory] = useAtom(sceneHistoryAtom);
-    const [markerToCopy, setMarkerToCopy] = useAtom(markerToCopyAtom);
+    const [, setMarkerToCopy] = useAtom(markerToCopyAtom);
     const {setMarkerToConfig, setVideoToView, setImageToView} = useMenu();
 
     const deleteMarker = useAtomCallback(useCallback((get, set, marker: Marker) => {
@@ -135,8 +135,9 @@ const PhotoSphereViewer = () => {
                             icon: 'info',
                             confirmButtonText: 'Ok'
                         })
+                    }else if (marker.type === MarkerType.LINK){
+                        openInNewTab(marker.url as string);
                     }
-
                 });
             }else if(mouseState === MouseState.Setting){
                 const targetMarker = Global.currentScene.markers.find((m) => m.id === marker.data.marker.id);
@@ -187,9 +188,6 @@ const PhotoSphereViewer = () => {
                     case MouseState.MarkerLink:
                         type = MarkerType.LINK;
                         break;
-                    case MouseState.MarkerBlank:
-                        type = MarkerType.BLANK;
-                        break;
                 }
 
                 if(type){
@@ -218,14 +216,17 @@ const PhotoSphereViewer = () => {
                             image: newMarker.customIcon ? newMarker.customIcon : MarkerIconByType(type),
                             width: Number(setting?.defaultMarkerSize),
                             height: Number(setting?.defaultMarkerSize),
-                            // anchor: 'bottom center',
                             tooltip: newMarker.name,
                             data: {
                                 generated: true,
                                 scene: Global.currentScene,
                                 marker: newMarker
                             },
-                            className: "marker-style"
+                            className: "marker-style",
+                            style: {
+                                backgroundColor: newMarker.backgroundColor || "transparent",
+                                borderRadius: `${newMarker.borderRadius}%` || "0%",
+                            }
                         });
                     saveScene();
                 }else{
@@ -251,7 +252,11 @@ const PhotoSphereViewer = () => {
                                         scene: Global.currentScene,
                                         marker: newMarker
                                     },
-                                    className: "marker-style"
+                                    className: "marker-style",
+                                    style: {
+                                        backgroundColor: newMarker.backgroundColor || "transparent",
+                                        borderRadius: `${newMarker.borderRadius}%` || "0%",
+                                    }
                                 });
                             if(newMarker){
                                 Global.currentScene.markers.push(newMarker);
@@ -316,14 +321,17 @@ const initMarkerOnScene = (scene: Scene) => {
             image: m.customIcon ? m.customIcon : MarkerIconByType(m.type),
             width: Number(size),
             height: Number(size),
-            // anchor: 'bottom center',
             tooltip: m.tooltip || m.name,
             data: {
                 generated: false,
                 scene: scene,
                 marker: m
             },
-            className: "marker-style"
+            className: "marker-style",
+            style: {
+                backgroundColor: m.backgroundColor || "transparent",
+                borderRadius: `${m.borderRadius}%` || "0%",
+            }
         });
     });
 }
@@ -349,7 +357,7 @@ export const changeScene = (scene: Scene) => {
             try{
                 gyroPlugin && gyroPlugin?.start();
             }catch (e){
-                console.log(e);
+                console.error(e);
             }
         });
     }else{

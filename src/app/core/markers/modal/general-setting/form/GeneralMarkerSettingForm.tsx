@@ -21,6 +21,24 @@ const GeneralMarkerSettingForm: FC<ConfigMarkerModalChildProps> = ({props}) => {
                 <MDBBtn type="button" color="secondary" onClick={()=>deleteValueOnAttribute("customIcon")}><i className={"fa fa-trash"}/></MDBBtn>
             </MDBInputGroup>
             <MDBInputGroup>
+                <MDBSwitch checked={props.watch('backgroundColor') !== undefined} label='Enable background color'
+                           onChange={(e)=>props.setValue('backgroundColor', e.target.checked ? "#ffffff" : undefined)} />
+            </MDBInputGroup>
+            {
+                props.watch('backgroundColor') !== undefined &&
+                <MDBInputGroup textBefore={"Background color"}>
+                    <input type="color" className="form-control" {...props.register("backgroundColor")} placeholder={"Using marker background color default value"} />
+                    <div className="p-2">
+                        {props.watch("backgroundColor")}
+                    </div>
+                </MDBInputGroup>
+            }
+            <MDBInputGroup textBefore={"Border radius"}>
+                <input type="number" className="form-control" {...props.register("borderRadius")} placeholder={"Using marker border radius default value"} />
+                <MDBBtn type="button" color="secondary" onClick={()=>deleteValueOnAttribute("borderRadius")}><i className={"fa fa-trash"}/></MDBBtn>
+            </MDBInputGroup>
+
+            <MDBInputGroup>
                 <MDBSwitch checked={props.watch('disableClick') || false} label='Disable click' onChange={(e)=>props.setValue('disableClick', e.target.checked)} />
             </MDBInputGroup>
         </form>

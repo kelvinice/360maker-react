@@ -29,6 +29,8 @@ export interface Marker {
     size?: number
     customIcon?: string
     disableClick?: boolean
+    backgroundColor?: string
+    borderRadius?: number
 }
 
 export interface SettingModel {

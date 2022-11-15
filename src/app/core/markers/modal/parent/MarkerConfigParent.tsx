@@ -24,6 +24,7 @@ import {
 } from "mdb-react-ui-kit";
 import GeneralMarkerSetting from "../general-setting/GeneralMarkerSetting";
 import MarkerIconByType from "../../../../utility/MarkerIconByType";
+import LinkMarkerConfig from "../link-marker/LinkMarkerConfig";
 
 export interface ConfigMarkerModalProps {
     register:  UseFormRegister<Marker>,
@@ -67,6 +68,10 @@ const MarkerConfigParent = () => {
                         width: size,
                         height: size,
                         image: data.customIcon ? data.customIcon : MarkerIconByType(data.type),
+                        style: {
+                            backgroundColor: data.backgroundColor || "transparent",
+                            borderRadius: `${data.borderRadius}%` || "0%",
+                        }
                     };
                     markersPlugin.updateMarker(properties);
                 }
@@ -90,6 +95,8 @@ const MarkerConfigParent = () => {
                 return <ImageMarkerConfig props={props} />
             case MarkerType.DESCRIPTION:
                 return <DescriptionMarkerConfig props={props} />
+            case MarkerType.LINK:
+                return <LinkMarkerConfig props={props} />
             default:
                 return <></>
         }
