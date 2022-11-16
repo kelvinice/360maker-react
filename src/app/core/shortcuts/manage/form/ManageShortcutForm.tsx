@@ -112,7 +112,7 @@ const ManageShortcutForm = () => {
         setChildren(newChildren);
     }
 
-    if(!scenes || shortcutIdToManage === null || (watch("sceneId") === undefined && shortcutIdToManage !== ""))
+    if(!scenes || shortcutIdToManage === null || (shortcutIdToManage !== "" && watch("id") === undefined))
         return <></>
 
 
@@ -129,7 +129,7 @@ const ManageShortcutForm = () => {
                     </div>
                     <div className="form-group mb-2">
                         <label htmlFor="path">Scene</label>
-                        <Select className="form-control" id="sceneId"
+                        <Select className="form-control" id="sceneId" isDisabled={children.length > 0}
                                 options={scenes?.map((scene) => ({value: scene.id as string, label: scene.name}))}
                                 defaultValue={{
                                     value: scenes?.find((scene) => scene.id === watch('sceneId'))?.id,
@@ -139,7 +139,11 @@ const ManageShortcutForm = () => {
                                     setValue("sceneId", e?.value as string);
                                 }}
                         />
+                        {
+                            children.length > 0 && <div className="text-info">You can't change the scene if the shortcut have children, this shortcut will automatically converted into drop menu.</div>
+                        }
                     </div>
+
 
                 </form>
                 <div className="mt-3">
