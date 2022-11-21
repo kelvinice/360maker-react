@@ -11,7 +11,6 @@ interface DataImportFormProps {
     file: File[];
 }
 
-
 const DataImportModal = () => {
     const {modalImport, setModalImport} = useMenu();
     const {register, formState:{errors}, handleSubmit} = useForm<DataImportFormProps>();

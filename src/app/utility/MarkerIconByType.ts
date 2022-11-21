@@ -1,23 +1,27 @@
 import {
+    CustomMarkerIconPath,
     DescriptionMarkerIconPath,
     ImageMarkerIconPath, LinkMarkerIconPath,
     PlaceMarkerIconPath,
     VideoMarkerIconPath
 } from "../constants/AssetPath";
+import {MarkerType} from "../constants/MarkerType";
 
 export default function MarkerIconByType(type: string): string {
     switch (type) {
-        case "place":
+        case MarkerType.PLACE:
         return PlaceMarkerIconPath;
-        case "video":
+        case MarkerType.VIDEO:
         return VideoMarkerIconPath;
-        case "image":
+        case MarkerType.IMAGE:
         return ImageMarkerIconPath;
-        case "description":
+        case MarkerType.DESCRIPTION:
         return DescriptionMarkerIconPath;
-        case "link":
+        case MarkerType.LINK:
         return LinkMarkerIconPath;
+        case MarkerType.CUSTOM:
+        return CustomMarkerIconPath;
         default:
-        return PlaceMarkerIconPath;
+        return CustomMarkerIconPath;
     }
 }

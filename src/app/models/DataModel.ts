@@ -12,6 +12,14 @@ export interface Scene{
     markers: Marker[]
 }
 
+export interface MarkerData {
+    type: string;
+}
+
+export interface MarkerDataLink extends MarkerData {
+    url: string;
+}
+
 export interface Marker {
     id?: string
     type: string
@@ -31,6 +39,7 @@ export interface Marker {
     disableClick?: boolean
     backgroundColor?: string
     borderRadius?: number
+    data?: MarkerData[];
 }
 
 export interface SettingModel {

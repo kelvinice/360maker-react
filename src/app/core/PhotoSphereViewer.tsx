@@ -3,7 +3,7 @@ import {Viewer} from "photo-sphere-viewer";
 import {MarkersPlugin} from "photo-sphere-viewer/dist/plugins/markers";
 import {GyroscopePlugin} from "photo-sphere-viewer/dist/plugins/gyroscope";
 import {Global} from "../data/Global";
-import {Marker, Scene} from "../models/DataModel";
+import {Marker, MarkerDataLink, Scene} from "../models/DataModel";
 import {v4 as uuidv4} from "uuid";
 import {useAtom} from "jotai";
 import {dataScenesAtom, markerToCopyAtom, mouseStateAtom, sceneHistoryAtom, settingsAtom} from "../atoms/DataAtom";
@@ -188,6 +188,8 @@ const PhotoSphereViewer = () => {
                     case MouseState.MarkerLink:
                         type = MarkerType.LINK;
                         break;
+                    case MouseState.MarkerCustom:
+                        type = MarkerType.CUSTOM;
                 }
 
                 if(type){

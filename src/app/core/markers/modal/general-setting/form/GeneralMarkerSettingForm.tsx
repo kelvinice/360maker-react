@@ -28,7 +28,7 @@ const GeneralMarkerSettingForm: FC<ConfigMarkerModalChildProps> = ({props}) => {
                 props.watch('backgroundColor') !== undefined &&
                 <MDBInputGroup textBefore={"Background color"}>
                     <input type="color" className="form-control" {...props.register("backgroundColor")} placeholder={"Using marker background color default value"} />
-                    <div className="p-2">
+                    <div className="rounded-end p-1 border border-1">
                         {props.watch("backgroundColor")}
                     </div>
                 </MDBInputGroup>

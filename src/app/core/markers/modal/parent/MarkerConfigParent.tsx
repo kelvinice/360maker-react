@@ -25,6 +25,7 @@ import {
 import GeneralMarkerSetting from "../general-setting/GeneralMarkerSetting";
 import MarkerIconByType from "../../../../utility/MarkerIconByType";
 import LinkMarkerConfig from "../link-marker/LinkMarkerConfig";
+import CustomMarkerConfig from "../custom-marker/CustomMarkerConfig";
 
 export interface ConfigMarkerModalProps {
     register:  UseFormRegister<Marker>,
@@ -97,20 +98,24 @@ const MarkerConfigParent = () => {
                 return <DescriptionMarkerConfig props={props} />
             case MarkerType.LINK:
                 return <LinkMarkerConfig props={props} />
+            case MarkerType.CUSTOM:
+                return <CustomMarkerConfig props={props} />
             default:
                 return <></>
         }
     }
 
-
-
     const handleIconsClick = (value: string) => {
         if (value === iconsActive) {
             return;
         }
-
         setIconsActive(value);
     };
+
+    if(watch('id') === undefined){
+        return <></>;
+    }
+
 
     return (
         <>

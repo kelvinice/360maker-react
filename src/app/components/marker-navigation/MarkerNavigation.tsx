@@ -86,13 +86,13 @@ const MarkerNavigation = () => {
 
                     <div className="border border-dark border-1 h-auto"/>
 
-                    <MouseStateButton color="info" tooltip="Select Cursor" targetMouseState={MouseState.Cursor} children={<Mouse/>}/>
-                    <MouseStateButton color="info" tooltip="Setting Cursor" targetMouseState={MouseState.Setting} children={<Settings/>}/>
-                    <MouseStateButton color="info" tooltip="Delete Cursor" targetMouseState={MouseState.Delete} children={<Delete />}/>
-                    <MouseStateButton color="info" tooltip="Copy Cursor" targetMouseState={MouseState.Copy} children={<i className="fa fa-copy fs-5 d-flex justify-content-center align-items-center" style={{height:"24px", width:"24px"}}/>}/>
-                    <MouseStateButton color="info" tooltip="Paste Cursor" disabled={!markerToCopy} targetMouseState={MouseState.Paste} children={<i className="fa fa-paste fs-5 d-flex justify-content-center align-items-center" style={{height:"24px", width:"24px"}}/>}/>
+                    <MouseStateButton color="info" tooltip="Select marker" targetMouseState={MouseState.Cursor} children={<Mouse/>}/>
+                    <MouseStateButton color="info" tooltip="Setting marker" targetMouseState={MouseState.Setting} children={<Settings/>}/>
+                    <MouseStateButton color="info" tooltip="Delete marker" targetMouseState={MouseState.Delete} children={<Delete />}/>
+                    <MouseStateButton color="info" tooltip="Copy marker" targetMouseState={MouseState.Copy} children={<i className="fa fa-copy fs-5 d-flex justify-content-center align-items-center" style={{height:"24px", width:"24px"}}/>}/>
+                    <MouseStateButton color="info" tooltip="Paste marker" disabled={!markerToCopy} targetMouseState={MouseState.Paste} children={<i className="fa fa-paste fs-5 d-flex justify-content-center align-items-center" style={{height:"24px", width:"24px"}}/>}/>
 
-                    <MDBDropdown group data-toggle="tooltip" title="Marker cursor">
+                    <MDBDropdown group data-toggle="tooltip" title="Marker selection">
                         <MDBDropdownToggle className={clsx({
                             "active": markers.find(marker => marker.targetMouseState === getMouseState()) !== undefined,
                         }, "btn btn-sm")}>
