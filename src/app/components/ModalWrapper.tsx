@@ -10,6 +10,7 @@ import ViewVideoModal from "./media/ViewVideoModal";
 import ViewImageModal from "./media/ViewImageModal";
 import ViewShortcutModal from "../core/shortcuts/view/ViewShortcutModal";
 import ManageShortcutModal from "../core/shortcuts/manage/ManageShortcutModal";
+import ViewCustomMarkerModal from "./custom-marker/ViewCustomMarkerModal";
 
 const ModalWrapper = () => {
     const {markerToConfig, VRSceneToView} = useMenu();
@@ -24,6 +25,7 @@ const ModalWrapper = () => {
             <ManageShortcutModal />
             <SettingModal />
             <DataImportModal />
+            <ViewCustomMarkerModal />
             <ViewVideoModal />
             <ViewImageModal />
         </>

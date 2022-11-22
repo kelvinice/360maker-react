@@ -3,7 +3,7 @@ import {Viewer} from "photo-sphere-viewer";
 import {MarkersPlugin} from "photo-sphere-viewer/dist/plugins/markers";
 import {GyroscopePlugin} from "photo-sphere-viewer/dist/plugins/gyroscope";
 import {Global} from "../data/Global";
-import {Marker, MarkerDataLink, Scene} from "../models/DataModel";
+import {Marker, Scene} from "../models/DataModel";
 import {v4 as uuidv4} from "uuid";
 import {useAtom} from "jotai";
 import {dataScenesAtom, markerToCopyAtom, mouseStateAtom, sceneHistoryAtom, settingsAtom} from "../atoms/DataAtom";
@@ -22,7 +22,7 @@ const PhotoSphereViewer = () => {
     const [setting] = useAtom(settingsAtom);
     const [,setSceneHistory] = useAtom(sceneHistoryAtom);
     const [, setMarkerToCopy] = useAtom(markerToCopyAtom);
-    const {setMarkerToConfig, setVideoToView, setImageToView} = useMenu();
+    const {setMarkerToConfig, setVideoToView, setImageToView, setCustomMarkerToView} = useMenu();
 
     const deleteMarker = useAtomCallback(useCallback((get, set, marker: Marker) => {
         const scenes = get(dataScenesAtom);
@@ -137,6 +137,8 @@ const PhotoSphereViewer = () => {
                         })
                     }else if (marker.type === MarkerType.LINK){
                         openInNewTab(marker.url as string);
+                    }else if (marker.type === MarkerType.CUSTOM){
+                        setCustomMarkerToView(marker);
                     }
                 });
             }else if(mouseState === MouseState.Setting){

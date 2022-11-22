@@ -18,9 +18,10 @@ export interface MarkerData {
 
 export interface MarkerDataLink extends MarkerData {
     url: string;
+    text: string;
 }
 
-export interface MarkerDataSlideImage extends MarkerData {
+export interface MarkerDataImageSlider extends MarkerData {
     images: string[];
 }
 

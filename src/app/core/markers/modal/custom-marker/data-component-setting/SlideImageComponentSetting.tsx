@@ -1,13 +1,13 @@
 import React, {FC, useEffect} from 'react';
 import {CustomMarkerConfigProps} from "../CustomMarkerConfig";
-import {MarkerDataSlideImage} from "../../../../../models/DataModel";
+import {MarkerDataImageSlider} from "../../../../../models/DataModel";
 
 const SlideImageComponentSetting: FC<CustomMarkerConfigProps> = ({props}) => {
-    const data = props.markerData as MarkerDataSlideImage;
+    const data = props.markerData as MarkerDataImageSlider;
 
     useEffect(() => {
         if (data.images === undefined || data.images=== null) {
-            props.changeMarkerDataOnIndex(props.index, {...data, images: []} as MarkerDataSlideImage);
+            props.changeMarkerDataOnIndex(props.index, {...data, images: []} as MarkerDataImageSlider);
         }
     });
 
@@ -16,11 +16,11 @@ const SlideImageComponentSetting: FC<CustomMarkerConfigProps> = ({props}) => {
     }
 
     const addImage = () => {
-        props.changeMarkerDataOnIndex(props.index, {...data, images: [...data.images, ""]} as MarkerDataSlideImage);
+        props.changeMarkerDataOnIndex(props.index, {...data, images: [...data.images, ""]} as MarkerDataImageSlider);
     }
 
     const removeImage = (index: number) => {
-        props.changeMarkerDataOnIndex(props.index, {...data, images: data.images.filter((image, i) => i !== index)} as MarkerDataSlideImage);
+        props.changeMarkerDataOnIndex(props.index, {...data, images: data.images.filter((image, i) => i !== index)} as MarkerDataImageSlider);
     }
 
     const swapIndex = (index: number, isUp: boolean) => {
@@ -33,7 +33,7 @@ const SlideImageComponentSetting: FC<CustomMarkerConfigProps> = ({props}) => {
                 return data.images[index];
             }
             return image;
-        })} as MarkerDataSlideImage);
+        })} as MarkerDataImageSlider);
     }
 
     return (
@@ -51,7 +51,7 @@ const SlideImageComponentSetting: FC<CustomMarkerConfigProps> = ({props}) => {
                                                }
                                                return img;
                                            });
-                                           props.changeMarkerDataOnIndex(props.index, {...data, images: newImages} as MarkerDataSlideImage);
+                                           props.changeMarkerDataOnIndex(props.index, {...data, images: newImages} as MarkerDataImageSlider);
                                        }}
                                 />
                                 <button className={"btn btn-danger"} type={"button"}
