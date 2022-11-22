@@ -5,7 +5,6 @@ import {MDBCarousel, MDBCarouselItem} from "mdb-react-ui-kit";
 
 const ImageSliderCustomMarkerData: FC<CustomMarkerDataProps> = ({markerData}) => {
     const data = markerData as MarkerDataImageSlider;
-    console.log(data.images);
 
     return (
         <MDBCarousel showIndicators showControls fade >
