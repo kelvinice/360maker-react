@@ -12,7 +12,6 @@ const ImageSliderCustomMarkerData: FC<CustomMarkerDataProps> = ({markerData}) =>
                 data.images.map((image, index) => {
                     return (
                         <MDBCarouselItem className='w-100 d-block' itemId={index + 1} key={index} src={image}>
-
                         </MDBCarouselItem>
                     );
                 })
