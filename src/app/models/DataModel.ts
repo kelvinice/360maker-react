@@ -20,6 +20,10 @@ export interface MarkerDataLink extends MarkerData {
     url: string;
 }
 
+export interface MarkerDataSlideImage extends MarkerData {
+    images: string[];
+}
+
 export interface Marker {
     id?: string
     type: string

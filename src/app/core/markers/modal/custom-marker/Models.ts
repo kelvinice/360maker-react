@@ -1,18 +1,15 @@
-export interface CustomMarkerModel {
+export interface CustomMarkerDataTypeModel {
     code: string;
     name: string;
 }
 
-export const CustomMarkerDataType =
-    [
-        { code: "button-link", name: "Button Link" } as CustomMarkerModel,
-    ]
-
-export const CustomMarkerDataObject = () => {
-    return CustomMarkerDataType.map((item) => {
-        return {
-            code: item.code,
-            name: item.name,
-        }
-    });
+export const CustomMarkerDataType = {
+    buttonLink: {
+        code: 'buttonLink',
+        name: 'Button Link'
+    } as CustomMarkerDataTypeModel,
+    slideImage: {
+        code: 'slideImage',
+        name: 'Slide Image'
+    } as CustomMarkerDataTypeModel,
 }
